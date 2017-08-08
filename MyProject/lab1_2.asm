@@ -28,4 +28,4 @@ inc i
 rjmp loop
 
 end:
-rjmp endsecond
+rjmp end

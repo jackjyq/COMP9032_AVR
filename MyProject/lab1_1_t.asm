@@ -27,13 +27,13 @@ brlo altb	;if a < b, jump to a_less
 
 blta:		;if a > b, then a = a - b
 	sub a, b
-	brne begin
-	mov a, b
+	brne begin ;if a <> b, loop
+	mov a, b ;for lacking of brne before sub function, so a will be 0. this code can cp b to a and fix this problem.
 	rjmp end
 
 altb:		;if a < b, then b = b - a
 	sub b, a
-	brne begin
+	brne begin ;if a <> b, loop
 
 end:
 	rjmp end

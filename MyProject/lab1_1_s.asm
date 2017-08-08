@@ -29,10 +29,10 @@ brlo altb	;if a < b, jump to a_less
 
 blta:		;if a > b, then a = a - b
 	sub a, b
-	rjmp	begin
+	rjmp	begin ;loop
 
 altb:		;if a < b, then b = b - a
 	sub b, a
-	rjmp	begin
+	rjmp	begin ;loop
 
 
