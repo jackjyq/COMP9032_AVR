@@ -22,7 +22,7 @@
   <FILE>OpenMe.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <loop><FILE>C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm</FILE><LINE>32</LINE></loop>
-  <end><FILE>C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm</FILE><LINE>40</LINE></end>
+  <loop><FILE>C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm</FILE><LINE>34</LINE></loop>
+  <end><FILE>C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm</FILE><LINE>42</LINE></end>
  </LABELS>
 </ASSEMBLER_INFO>

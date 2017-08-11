@@ -8,9 +8,6 @@
 ;	minimus the number of register usage
 ;	for example:
 ;	sum = a + a * a + (a * a) * a
-;Test Sample:
-;	a = 0x2, n = 0x3, sum = 2 + 4 + 8 = 14 = E
-;	
 
 .include "m2560def.inc"
 
@@ -21,10 +18,15 @@
 .def sumL = r20
 .def sumH = r21
 
+;Test Sample 1:
+;ldi a, 0x2
+;ldi n, 0x3
+;expected sum = 2 + 4 + 8 = 0xE
 
-;Test code
-ldi a, 2
-ldi n, 3
+;Test Sample 1:
+;ldi a, 0xE
+;ldi n, 0x3
+;expected sum = E + C4 + AB8 = 14 = 0xB8A
 
 ;initialize i = 1, p = 1
 ldi p, 1
