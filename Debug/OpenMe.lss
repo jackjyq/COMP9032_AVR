@@ -1,12 +1,12 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\MyProject\lab1_1_t.asm Tue Aug 08 20:46:44 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm Fri Aug 11 16:52:56 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\MyProject\lab1_1_t.asm(20): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm(1): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\MyProject\lab1_1_t.asm(20): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm(1): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
                                  
-                                 ;Author:Jack(z5129432)
+                                 .include "m2560def.inc"
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
                                  ;*************************************************************************
@@ -1844,25 +1844,6 @@ C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\MyProject\lab1_1_t.asm(20):
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 ;Last Modification:1/08/2017
-                                 ;Version:V0.1.0
-                                 ;Description:calculating the greatest common divisor of two numbers
-                                 ;for minimum clock time
-                                 ;16 byte,   clock time for test sample 3
-                                 ;while(a!=b)
-                                 ;{
-                                 ;	if(a>b)
-                                 ;		a = a - b;
-                                 ;	else
-                                 ;		b = b - a;
-                                 ;}
-                                 ;reture 0;
-                                 ;test sample 1: if a = B, b = 7, then the final result is a = b = 1
-                                 ;test sample 2: if a = 8, b = 4, then the final result is a = b = 4
-                                 ;test sample 3: if a = 63, b = 9, then the final result is a = b = 9
-                                 
-                                 
-                                 .include "m2560def.inc"
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
                                  ;*************************************************************************
@@ -1906,26 +1887,36 @@ C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\MyProject\lab1_1_t.asm(20):
                                  #endif  /* _M2560DEF_INC_ */
                                  
                                  ; ***** END OF FILE ******************************************************
-                                 .def a = r16
-                                 .def b = r17
+                                 .def a = r17
+                                 .def i = r18
+                                 .def n = r19
+                                 .def anH = r21
+                                 .def anL = r20
+                                 .def sumH = r16
+                                 .def sumL = r15
                                  
-                                 begin:
-000000 1701                      cp a, b		;compare a and b
-000001 f020                      brlo altb	;if a < b, jump to a_less
+000000 e020                      ldi i, 0
+000001 2f41                      mov anL, a
+000002 e050                      ldi anH, 0
+000003 e034                      ldi n, 4
                                  
-                                 blta:		;if a > b, then a = a - b
-000002 1b01                      	sub a, b
-000003 f7e1                      	brne begin ;if a <> b, loop
-000004 2f01                      	mov a, b ;for lacking of brne before sub function, so a will be 0. this code can cp b to a and fix this problem.
-000005 c002                      	rjmp end
+                                 loop:
+000004 1732                      cp n, i
+000005 f051                      breq end
+000006 9f41                      mul anL, a
+000007 2c50                      mov r5, r0
+000008 9f41                      mul anL, a
+000009 0c51                      add r5, r1
+00000a 2c40                      mov r4, r0
+00000b 01a2                      movw r21:r20, r5:r4
                                  
-                                 altb:		;if a < b, then b = b - a
-000006 1b10                      	sub b, a
-000007 f7c1                      	brne begin ;if a <> b, loop
+00000c 0cf4                      add sumL, r4
+00000d 1d05                      adc sumH, r5
+00000e 9523                      inc i
+00000f cff4                      rjmp loop
                                  
                                  end:
-000008 cfff                      	rjmp end
-                                 
+000010 cfff                      rjmp end
 
 
 RESOURCE USE INFORMATION
@@ -1943,40 +1934,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega2560" register use summary:
-x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
-r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   4 r17:   4 r18:   0 r19:   0 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+x  :   0 y  :   0 z  :   0 r0 :   2 r1 :   1 r2 :   0 r3 :   0 r4 :   3 
+r5 :   4 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
+r13:   0 r14:   0 r15:   1 r16:   1 r17:   3 r18:   3 r19:   2 r20:   4 
+r21:   2 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 2 out of 35 (5.7%)
+Registers used: 11 out of 35 (31.4%)
 
 "ATmega2560" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   1 add   :   2 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
-brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   0 
 cpi   :   0 cpse  :   0 dec   :   0 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   0 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   0 
-lds   :   0 lpm   :   0 lsl   :   0 lsr   :   0 mov   :   1 movw  :   0 
-mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
+in    :   0 inc   :   1 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   3 
+lds   :   0 lpm   :   0 lsl   :   0 lsr   :   0 mov   :   3 movw  :   1 
+mul   :   2 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
 ori   :   0 out   :   0 pop   :   0 push  :   0 rcall :   0 ret   :   0 
 reti  :   0 rjmp  :   2 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
-st    :   0 std   :   0 sts   :   0 sub   :   2 subi  :   0 swap  :   0 
+st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 6 out of 116 (5.2%)
+Instructions used: 10 out of 116 (8.6%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000012     18      0     18  262144   0.0%
+[.cseg] 0x000000 0x000022     34      0     34  262144   0.0%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 

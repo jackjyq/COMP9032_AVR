@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.42  C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.asm Tue Aug 01 14:54:16 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm Fri Aug 11 16:52:56 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1359,10 +1359,12 @@ EQU  URXC3addr    0000006c
 EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
-DEF  a            r16
-DEF  b            r17
-DEF  c            r10
-DEF  d            r11
-DEF  e            r12
-CSEG main         00000000
-CSEG halt         0000000a
+DEF  a            r17
+DEF  i            r18
+DEF  n            r19
+DEF  anH          r21
+DEF  anL          r20
+DEF  sumH         r16
+DEF  sumL         r15
+CSEG loop         00000004
+CSEG end          00000010

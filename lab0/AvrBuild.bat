@@ -1,2 +1,0 @@
-@ECHO OFF
-"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\labels.tmp" -fI -W+ie -C V3 -o "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.hex" -d "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.obj" -e "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.eep" -m "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.map" "C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab0\lab0.asm"
