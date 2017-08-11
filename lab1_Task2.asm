@@ -1,31 +1,41 @@
+;Author: Jack (z5129432)
+;Date: 
+;Version: 1
+;Description: 
+;	Calculate sum(a^i) where i in range[1, n]
+;	a, n are 8-bit unsigned integer
+;	sum is 16 bits unsigned integer
+;	minimus the number of register usage
+;	for example:
+;	sum = a + a * a + (a * a) * a
+;Test Sample:
+;	a = 0x2, n = 0x3, sum = 2 + 4 + 8 = 14 = E
+;	
+
 .include "m2560def.inc"
-.def a = r17
-.def i = r18
-.def n = r19
-.def anH = r21
-.def anL = r20
-.def sumH = r16
-.def sumL = r15
 
-ldi i, 0
-mov anL, a
-ldi anH, 0
-ldi n, 4
+.def a = r16
+.def n = r17
+.def i = r18	;indacator i in range [1, n]
+.def p = r19	;product like a or a * a or a * a * a
+.def sumL = r20
+.def sumH = r21
 
-loop:
-cp n, i
-breq end
-mul anL, a
-mov r5, r0
-mul anL, a
-add r5, r1
-mov r4, r0
-movw r21:r20, r5:r4
 
-add sumL, r4
-adc sumH, r5
-inc i
-rjmp loop
+;Test code
+ldi a, 2
+ldi n, 3
+
+;initialize i = 1, p = 1
+ldi p, 1
+
+loop: 	;Calculate sum += p * 1, divided by two steps
+mul p, a 	;p *= a
+mov p, r0
+add sumL, r0 ;sum += p
+adc sumH, r1
+dec n	; decrease n by 1
+brne loop
 
 end:
 rjmp end
