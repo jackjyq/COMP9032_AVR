@@ -13,7 +13,6 @@
 
 .def a = r16
 .def n = r17
-.def i = r18	;indacator i in range [1, n]
 .def p = r19	;product like a or a * a or a * a * a
 .def sumL = r20
 .def sumH = r21
@@ -23,10 +22,10 @@
 ;ldi n, 0x3
 ;expected sum = 2 + 4 + 8 = 0xE
 
-;Test Sample 1:
+;Test Sample 2:
 ;ldi a, 0xE
 ;ldi n, 0x3
-;expected sum = E + C4 + AB8 = 14 = 0xB8A
+;expected sum = E + C4 + AB8 = 2954 = 0xB8A
 
 ;initialize i = 1, p = 1
 ldi p, 1
