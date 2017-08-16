@@ -7,7 +7,7 @@
 ;	sum is 16 bits unsigned integer
 ;	minimus the number of register usage
 ;	for example:
-;	sum = a + a * a + (a * a) * a
+;	sum = a + a * a + (a * a) * a 
 
 .include "m2560def.inc"
 
