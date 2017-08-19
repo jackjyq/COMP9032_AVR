@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\Documents\GitHub\jack_comp9032_lab\lab1_Task2.asm Fri Aug 11 20:30:31 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm Sat Aug 19 22:37:59 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1359,11 +1359,20 @@ EQU  URXC3addr    0000006c
 EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
-DEF  a            r16
-DEF  n            r17
-DEF  i            r18
-DEF  p            r19
-DEF  sumL         r20
-DEF  sumH         r21
-CSEG loop         00000003
-CSEG end          00000009
+DEF  zero         r15
+DEF  dividend_H   r16
+DEF  dividend_L   r17
+DEF  divisor_H    r18
+DEF  divisor_L    r19
+DEF  quotient_H   r20
+DEF  quotient_L   r21
+DEF  bit_position_H r22
+DEF  bit_position_L r23
+DSEG quotient     00000200
+CSEG dividend     00000000
+CSEG divisor      00000001
+CSEG iteration_1  0000000f
+CSEG iteration_2  00000019
+CSEG write_result 00000028
+CSEG iteration_3  00000023
+CSEG end          0000002c

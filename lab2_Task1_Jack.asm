@@ -40,16 +40,15 @@
 .def bit_position_H = R22
 .def bit_position_L = R23
 
-; code/program memory, constants, starts from 0x0000
-                 .cseg                       
-dividend:        dw 0x0C91
-divisor:         dw 0x0010
-
  ; data memory, variables, starts form 0x0020
                  .dseg                      
                  .org 0x0200
 quotient:        .byte 2  ; two byte quotient variable, little endian rule is used
 
+; code/program memory, constants, starts from 0x0000
+                 .cseg                       
+dividend:        .dw 0x0C91
+divisor:         .dw 0x0010
 
 ; initialization
                 clr zero
@@ -64,8 +63,8 @@ quotient:        .byte 2  ; two byte quotient variable, little endian rule is us
                 lpm divisor_H, Z+
                 lpm divisor_L, Z
 
-                ldi bit_position_H = 0x00        ; initialise bit_positon = 0x0001
-                ldi bit_position_L = 0x01
+                ldi bit_position_H, 0x00        ; initialise bit_positon = 0x0001
+                ldi bit_position_L, 0x01
                 clr quotient_H                   ; initialise quotient = 0x0001
                 clr quotient_L
 

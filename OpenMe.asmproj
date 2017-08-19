@@ -15,7 +15,7 @@
     <Name>OpenMe</Name>
     <RootNamespace>OpenMe</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <EntryFile>$(MSBuildProjectDirectory)\lab1_Task2.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\lab2_Task1_Jack.asm</EntryFile>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
@@ -78,16 +78,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="lab0.asm">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="lab1_Task1_LeaseCode.asm">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="lab1_Task1_LeaseTime.asm">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="lab1_Task2.asm">
+    <Compile Include="lab2_Task1_Jack.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
