@@ -1,18 +1,18 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.6</VERSION>
  <DEVICE>"ATmega2560"</DEVICE>
- <WORKING_DIR>C:\Users\z5129432\GitHub\jack_comp9032_lab\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\Debug\OpenMe.obj</FILE>
+  <FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\Debug\OpenMe.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>OpenMe.hex</FILE>
@@ -22,14 +22,14 @@
   <FILE>OpenMe.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <quotient><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>51</LINE></quotient>
-  <dividend><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>55</LINE></dividend>
-  <divisor><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>56</LINE></divisor>
-  <iteration_1><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>77</LINE></iteration_1>
-  <iteration_2><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>94</LINE></iteration_2>
-  <redo_left_shift><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>89</LINE></redo_left_shift>
-  <write_result><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>113</LINE></write_result>
-  <iteration_3><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>107</LINE></iteration_3>
-  <end><FILE>C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm</FILE><LINE>118</LINE></end>
+  <quotient><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>51</LINE></quotient>
+  <dividend><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>55</LINE></dividend>
+  <divisor><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>56</LINE></divisor>
+  <iteration_1><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>77</LINE></iteration_1>
+  <iteration_2><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>101</LINE></iteration_2>
+  <redo_left_shift><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>96</LINE></redo_left_shift>
+  <write_result><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>120</LINE></write_result>
+  <iteration_3><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>114</LINE></iteration_3>
+  <end><FILE>C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm</FILE><LINE>125</LINE></end>
  </LABELS>
 </ASSEMBLER_INFO>

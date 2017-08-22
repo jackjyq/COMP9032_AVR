@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm Sun Aug 20 00:49:46 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm Tue Aug 22 20:22:20 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1373,8 +1373,8 @@ DSEG quotient     00000200
 CSEG dividend     00000000
 CSEG divisor      00000001
 CSEG iteration_1  00000010
-CSEG iteration_2  0000001e
-CSEG redo_left_shift 0000001a
-CSEG write_result 0000002d
-CSEG iteration_3  00000028
-CSEG end          00000031
+CSEG iteration_2  00000023
+CSEG redo_left_shift 0000001f
+CSEG write_result 00000032
+CSEG iteration_3  0000002d
+CSEG end          00000036

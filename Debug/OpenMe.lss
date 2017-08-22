@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm Sun Aug 20 00:49:46 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm Tue Aug 22 20:22:20 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm(35): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm(35): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm(35): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm(35): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
                                  
                                  ;Author: Jack (z5129432)
                                  
@@ -1940,8 +1940,8 @@ C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm(35): Including fi
                                  
                                  ; code/program memory, constants, starts from 0x0000
                                                   .cseg                       
-000000 8000                      dividend:        .dw 0x8000 ; 0x0000 ~ 910C
-000001 0008                      divisor:         .dw 0x0008 ; 0x0001 ~ 1000
+000000 0bb8                      dividend:        .dw 3000 ; 0x0000 ~ 910C
+000001 000f                      divisor:         .dw  15; 0x0001 ~ 1000
                                  
                                  ; initialization
 000002 e080                      				ldi bit_MSB, 0x00
@@ -1962,46 +1962,53 @@ C:\Users\z5129432\GitHub\jack_comp9032_lab\lab2_Task1_Jack.asm(35): Including fi
 00000e 2777                                      clr quotient_LSB                   ; initialise quotient = 0x0001
 00000f 2766                                      clr quotient_MSB
                                  
-000010 3820                      iteration_1:    cpi divisor_MSB, 0x80               ; if divisor_LSB >= 0b1000 0000
-000011 f460                                      brsh iteration_2                    ; branch is same of higher
-000012 1731                                      cp divisor_LSB, dividend_LSB        ; if divisor >= divident
-000013 0720                                      cpc divisor_MSB, dividend_MSB
-000014 f428                                      brsh redo_left_shift  			  ; branch is same of higher
+                                 iteration_1:    ;cpi divisor_MSB, 0x80               ; if divisor_LSB >= 0b1000 0000
+000010 2fb2                      				mov XH, divisor_MSB
+000011 2fa3                      				mov XL, divisor_LSB
+000012 78b0                      				andi XH, 0x80
+000013 70a0                      				andi XL, 0x00
+000014 2bba                      				or XH, XL
+000015 30b0                      				cpi XH, 0x00
+000016 f461                      				brne iteration_2
+                                                 ;brsh iteration_2                    ; branch is same of higher
+000017 1731                                      cp divisor_LSB, dividend_LSB        ; if divisor >= divident
+000018 0720                                      cpc divisor_MSB, dividend_MSB
+000019 f428                                      brsh redo_left_shift  			  ; branch is same of higher
                                  
-000015 0f33                                      lsl divisor_LSB                   ; left shift one
-000016 1f22                                      rol divisor_MSB                   ; left shift one with carry
-000017 0f55                                      lsl bit_position_LSB              ; left shift one
-000018 1f44                                      rol bit_position_MSB              ; left shift one with carry
-000019 cff6                                      rjmp iteration_1
+00001a 0f33                                      lsl divisor_LSB                   ; left shift one
+00001b 1f22                                      rol divisor_MSB                   ; left shift one with carry
+00001c 0f55                                      lsl bit_position_LSB              ; left shift one
+00001d 1f44                                      rol bit_position_MSB              ; left shift one with carry
+00001e cff1                                      rjmp iteration_1
                                  
-00001a 9526                      redo_left_shift:lsr divisor_MSB                   ; right shift divisor
-00001b 9537                                      ror divisor_LSB
-00001c 9546                                      lsr bit_position_MSB              ; right shift bit_position
-00001d 9557                                      ror bit_position_LSB
+00001f 9526                      redo_left_shift:lsr divisor_MSB                   ; right shift divisor
+000020 9537                                      ror divisor_LSB
+000021 9546                                      lsr bit_position_MSB              ; right shift bit_position
+000022 9557                                      ror bit_position_LSB
                                  
-00001e 1748                      iteration_2:    cp bit_position_MSB, bit_MSB        ; if bit_positon = 1, jump to next iteration
-00001f 0759                                      cpc bit_position_LSB, bit_LSB 
-000020 f061                                      breq write_result
+000023 1748                      iteration_2:    cp bit_position_MSB, bit_MSB        ; if bit_positon = 1, jump to next iteration
+000024 0759                                      cpc bit_position_LSB, bit_LSB 
+000025 f061                                      breq write_result
                                  
-000021 1713                                      cp dividend_LSB, divisor_LSB        ; if dividend < divisor, jump to next iteration
-000022 0702                                      cpc dividend_MSB, divisor_MSB
-000023 f020                                      brlo iteration_3                ; branch is lower
+000026 1713                                      cp dividend_LSB, divisor_LSB        ; if dividend < divisor, jump to next iteration
+000027 0702                                      cpc dividend_MSB, divisor_MSB
+000028 f020                                      brlo iteration_3                ; branch is lower
                                  
-000024 1b13                                      sub dividend_LSB, divisor_LSB       ; dividend = dividend - divisor
-000025 0b02                                      sbc dividend_MSB, divisor_MSB
-000026 0f75                                      add quotient_LSB, bit_position_LSB  ; quotient = quotient + bit_positon
-000027 1f64                                      adc quotient_MSB, bit_position_MSB
+000029 1b13                                      sub dividend_LSB, divisor_LSB       ; dividend = dividend - divisor
+00002a 0b02                                      sbc dividend_MSB, divisor_MSB
+00002b 0f75                                      add quotient_LSB, bit_position_LSB  ; quotient = quotient + bit_positon
+00002c 1f64                                      adc quotient_MSB, bit_position_MSB
                                  
-000028 9526                      iteration_3:    lsr divisor_MSB                   ; right shift divisor
-000029 9537                                      ror divisor_LSB
-00002a 9546                                      lsr bit_position_MSB              ; right shift bit_position
-00002b 9557                                      ror bit_position_LSB
-00002c cff1                                      rjmp iteration_2
+00002d 9526                      iteration_3:    lsr divisor_MSB                   ; right shift divisor
+00002e 9537                                      ror divisor_LSB
+00002f 9546                                      lsr bit_position_MSB              ; right shift bit_position
+000030 9557                                      ror bit_position_LSB
+000031 cff1                                      rjmp iteration_2
                                  
-00002d e0d2                      write_result:   ldi YH, high(quotient)     ; load quotient to registers
-00002e e0c0                                      ldi YL, low(quotient)
-00002f 9379                                      st Y+, quotient_LSB			; big endian
-000030 8368                                      st Y, quotient_MSB
+000032 e0d2                      write_result:   ldi YH, high(quotient)     ; load quotient to registers
+000033 e0c0                                      ldi YL, low(quotient)
+000034 9379                                      st Y+, quotient_LSB			; big endian
+000035 8368                                      st Y, quotient_MSB
                                  
 
 
@@ -2022,25 +2029,25 @@ counted separately from r26..r31 here.
 "ATmega2560" register use summary:
 x  :   0 y  :   2 z  :   4 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   4 r17:   4 r18:   8 r19:   7 r20:   6 
-r21:   6 r22:   3 r23:   3 r24:   2 r25:   2 r26:   0 r27:   0 r28:   1 
+r13:   0 r14:   0 r15:   0 r16:   4 r17:   4 r18:   8 r19:   8 r20:   6 
+r21:   6 r22:   3 r23:   3 r24:   2 r25:   2 r26:   3 r27:   4 r28:   1 
 r29:   1 r30:   2 r31:   2 
-Registers used: 16 out of 35 (45.7%)
+Registers used: 18 out of 35 (51.4%)
 
 "ATmega2560" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   0 
-andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
-brne  :   0 brpl  :   0 brsh  :   2 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   1 brpl  :   0 brsh  :   1 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   2 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   3 cpc   :   3 
 cpi   :   1 cpse  :   0 dec   :   0 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
 in    :   0 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :  10 
-lds   :   0 lpm   :   6 lsl   :   2 lsr   :   4 mov   :   0 movw  :   0 
-mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
+lds   :   0 lpm   :   6 lsl   :   2 lsr   :   4 mov   :   2 movw  :   0 
+mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   1 
 ori   :   0 out   :   0 pop   :   0 push  :   0 rcall :   0 ret   :   0 
 reti  :   0 rjmp  :   3 rol   :   2 ror   :   4 sbc   :   1 sbci  :   0 
 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
@@ -2048,12 +2055,12 @@ sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   2 std   :   0 sts   :   0 sub   :   1 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 19 out of 116 (16.4%)
+Instructions used: 23 out of 116 (19.8%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000064     96      4    100  262144   0.0%
+[.cseg] 0x000000 0x00006e    106      4    110  262144   0.0%
 [.dseg] 0x000200 0x000202      0      2      2    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 

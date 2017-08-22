@@ -52,8 +52,8 @@ quotient:        .byte 2  ; two byte quotient variable, little endian rule is us
 
 ; code/program memory, constants, starts from 0x0000
                  .cseg                       
-dividend:        .dw 0x8000 ; 0x0000 ~ 910C
-divisor:         .dw 0x0008 ; 0x0001 ~ 1000
+dividend:        .dw 3000 ; 0x0000 ~ 910C
+divisor:         .dw  15; 0x0001 ~ 1000
 
 ; initialization
 				ldi bit_MSB, 0x00
@@ -74,8 +74,15 @@ divisor:         .dw 0x0008 ; 0x0001 ~ 1000
                 clr quotient_LSB                   ; initialise quotient = 0x0001
                 clr quotient_MSB
 
-iteration_1:    cpi divisor_MSB, 0x80               ; if divisor_LSB >= 0b1000 0000
-                brsh iteration_2                    ; branch is same of higher
+iteration_1:    ;cpi divisor_MSB, 0x80               ; if divisor_LSB >= 0b1000 0000
+				mov XH, divisor_MSB
+				mov XL, divisor_LSB
+				andi XH, 0x80
+				andi XL, 0x00
+				or XH, XL
+				cpi XH, 0x00
+				brne iteration_2
+                ;brsh iteration_2                    ; branch is same of higher
                 cp divisor_LSB, dividend_LSB        ; if divisor >= divident
                 cpc divisor_MSB, dividend_MSB
                 brsh redo_left_shift  			  ; branch is same of higher
