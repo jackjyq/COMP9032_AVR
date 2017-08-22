@@ -16,5 +16,5 @@
 
 ; code/program memory, constants, starts from 0x0000
                .cseg                       
-string:        .dw 0x8000 ; 0x0000 ~ 910C
+string:        .dw 0x ; 
 
