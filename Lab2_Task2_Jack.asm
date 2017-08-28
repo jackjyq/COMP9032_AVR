@@ -1,7 +1,10 @@
 ;Author: Jack (z5129432)
-;Date: 27/08/2017
+;Date: 28/08/2017
 ;Version: 1
 ;Description: String to integer convertor
+;Test Sample:
+;	input string = "12345",0
+;	output R16:R17 = 0x3039
 .include "m2560def.inc"
 
 .def n_MSB = R16
@@ -14,7 +17,7 @@
 
 ; code/program memory, constants, starts from 0x0000
                .cseg                       
-string:        .dw "12345"
+string:        .db "12345",0
 
 
 main:
@@ -31,10 +34,14 @@ atoi:
     ; Prologue
     push YL
     push YH
+	push ZL
+	push ZH
     push i
     push c
     push zero
     push ten
+	push r1
+	push r0
     in YL, SPL
     in YH, SPH
     sbiw Y, 0
@@ -49,15 +56,15 @@ loop:
     brlo return     ; if char is less than '0'
     cpi c, '9'+1          
     brsh return     ; if char is greater than '9'
-    cpi n, 65536
-    brsh return     ; if n >= 65536
     subi c, '0'     ; c = c - '0'
     mul n_MSB, ten  ; n = n * 10
-    movw n_MSB, R0
+	cp r1, zero		
+	brne return		; r1 != 0 --> n_MSB * 10 overflow --> n > 65536
+    mov n_MSB, r0
     mul n_LSB, ten
-    movw n_LSB, R0
-    add n_MSB, R1
-    add n_LSB, char ; n = n + c
+    mov n_LSB, r0
+    add n_MSB, r1
+    add n_LSB, c	; n = n + c
     adc n_MSB, zero
     rjmp loop
 return:
@@ -65,10 +72,14 @@ return:
     adiw Y, 0
     out SPH, YH
     out SPL, YL
+	pop r0
+	pop r1
     pop ten
     pop zero
     pop c
     pop i
+	pop ZH
+	pop ZL
     pop YH
     pop YL
     ret

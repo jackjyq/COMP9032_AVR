@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\Jack_COMP9032_Lab\lab2_Task1_Jack.asm Tue Aug 22 20:22:20 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm Mon Aug 28 23:02:33 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1359,22 +1359,15 @@ EQU  URXC3addr    0000006c
 EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
-DEF  dividend_MSB r16
-DEF  dividend_LSB r17
-DEF  divisor_MSB  r18
-DEF  divisor_LSB  r19
-DEF  bit_position_MSB r20
-DEF  bit_position_LSB r21
-DEF  quotient_MSB r22
-DEF  quotient_LSB r23
-DEF  bit_MSB      r24
-DEF  bit_LSB      r25
-DSEG quotient     00000200
-CSEG dividend     00000000
-CSEG divisor      00000001
-CSEG iteration_1  00000010
-CSEG iteration_2  00000023
-CSEG redo_left_shift 0000001f
-CSEG write_result 00000032
-CSEG iteration_3  0000002d
-CSEG end          00000036
+DEF  n_MSB        r16
+DEF  n_LSB        r17
+DEF  i            r18
+DEF  c            r19
+DEF  zero         r20
+DEF  ten          r21
+CSEG string       00000000
+CSEG main         00000003
+CSEG atoi         00000009
+CSEG end          00000008
+CSEG loop         00000018
+CSEG return       0000002a
