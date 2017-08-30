@@ -1,9 +1,0 @@
-;Author: Jack (z5129432)
-;Date: 
-;Version: 1
-;Description: 
-;
-;
-;Test Sample:
-;	Input:
-;	Output:

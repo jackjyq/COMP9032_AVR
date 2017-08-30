@@ -12,10 +12,10 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <Language>ASSEMBLY</Language>
     <AssemblyName>OpenMe</AssemblyName>
-    <Name>OpenMe</Name>
+    <Name>COMP9032_Lab</Name>
     <RootNamespace>OpenMe</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <EntryFile>$(MSBuildProjectDirectory)\Lab2_Task2_Jack.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\lab3_Task1_Jack.asm</EntryFile>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
@@ -78,7 +78,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Lab2_Task2_Jack.asm">
+    <Compile Include="lab3_Task1_Jack.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

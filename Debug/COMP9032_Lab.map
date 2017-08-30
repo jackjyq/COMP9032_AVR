@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm Mon Aug 28 23:02:33 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm Thu Aug 31 00:12:52 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1359,15 +1359,26 @@ EQU  URXC3addr    0000006c
 EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
-DEF  n_MSB        r16
-DEF  n_LSB        r17
-DEF  i            r18
-DEF  c            r19
-DEF  zero         r20
-DEF  ten          r21
-CSEG string       00000000
-CSEG main         00000003
-CSEG atoi         00000009
-CSEG end          00000008
-CSEG loop         00000018
-CSEG return       0000002a
+DEF  Configue     r16
+DEF  Pattern_Low  r17
+DEF  Pattern_High r18
+DEF  show_loop_counter r19
+DEF  wait_loop_counter_1 r20
+DEF  wait_loop_counter_2 r21
+DEF  wait_loop_counter_3 r22
+DEF  i_1          r23
+DEF  i_2          r24
+DEF  i_3          r25
+DEF  zero         r26
+DEF  one          r27
+EQU  show_loop_times 00000004
+EQU  wait_loop_times 0012c7af
+CSEG main         00000005
+CSEG patterns     00000001
+CSEG show_init    00000013
+CSEG show_loop    00000016
+CSEG wait_init    0000001d
+CSEG wait_loop    00000023
+CSEG wait_end     0000002f
+CSEG halt         00000033
+CSEG end          00000038

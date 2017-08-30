@@ -1,12 +1,14 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm Mon Aug 28 23:02:33 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm Thu Aug 31 00:12:52 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm(8): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(39): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(51): warning: Register r26 already defined by the .DEF directive
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(52): warning: Register r27 already defined by the .DEF directive
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm(8): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(39): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
                                  
-                                 ;Author: Jack (z5129432)
+                                 ; Author: Jack (z5129432)
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
                                  ;*************************************************************************
@@ -1844,12 +1846,43 @@ C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm(8): Including file 'C:
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 ;Date: 28/08/2017
-                                 ;Version: 1
-                                 ;Description: String to integer convertor
-                                 ;Test Sample:
-                                 ;	input string = "12345",0
-                                 ;	output R16:R17 = 0x3039
+                                 ; Date: 
+                                 ; Version: 1
+                                 ; Wiring diagram: 
+                                 ;           LED:
+                                 ;           LED0 -- PG2
+                                 ;           LED1 -- PG3
+                                 ;           LED2 -- PC0
+                                 ;           LED3 -- PC1
+                                 ;           LED4 -- PC2
+                                 ;           LED5 -- PC3
+                                 ;           LED6 -- PC4
+                                 ;           LED7 -- PC5
+                                 ;           LED8 -- PC6
+                                 ;           LED9 -- PC7
+                                 ;           
+                                 ;           INPUTS:
+                                 ;           Button PB0 -- PD4
+                                 ;           Button PB1 -- PD3
+                                 ;
+                                 ; Delay calculation:
+                                 ; CPU frequency: 16MHz
+                                 ; Delay time:    1 Sec
+                                 ; clock cycles: 16 000 000
+                                 ;
+                                 ; clock cycles out of wait loop:
+                                 ;               block           clock cycles
+                                 ;               ----------------------------
+                                 ;               show_loop       14
+                                 ;               wait_int        6
+                                 ;               wait_end        5
+                                 ;               -------------------
+                                 ;               overall         25
+                                 ;
+                                 ; clock cycles with in wait loop
+                                 ; overall clock cycles needed = 15999975
+                                 ; clock cycles in one wait_loop = 13
+                                 ; wait_loop_time = 15999975 / 13 = 1230767
                                  .include "m2560def.inc"
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
@@ -1895,85 +1928,170 @@ C:\Users\z5129432\GitHub\COMP9032_AVR\Lab2_Task2_Jack.asm(8): Including file 'C:
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 .def n_MSB = R16
-                                 .def n_LSB = R17
-                                 .def i = R18
-                                 .def c = R19
-                                 .def zero = R20
-                                 .def ten = R21
+                                 .def Configue = R16
+                                 .def Pattern_Low = R17
+                                 .def Pattern_High = R18
+                                 .def show_loop_counter = R19
+                                 .def wait_loop_counter_1 = R20
+                                 .def wait_loop_counter_2 = R21
+                                 .def wait_loop_counter_3 = R22
+                                 .def i_1 = R23
+                                 .def i_2 = R24
+                                 .def i_3 = R25
+                                 .def zero = R26
+                                 .def one = R27
                                  
+                                 .equ show_loop_times = 4
+                                 .equ wait_loop_times = 1230767
                                  
                                  ; code/program memory, constants, starts from 0x0000
-                                                .cseg                       
-000000 3231
-000001 3433
-000002 0035                      string:        .db "12345",0
-                                 
+                                                .cseg
+000000 c004                      rjmp main                       
+                                 patterns:
+                                     ; only the least significant 10 bits are valid
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(62): warning: .cseg .db misalignment - padding zero byte
+000001 001f                          .db 0b0000000000011111
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(63): warning: .cseg .db misalignment - padding zero byte
+000002 00e0                          .db 0b0000001111100000
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(64): warning: .cseg .db misalignment - padding zero byte
+000003 00aa                          .db 0b0000001010101010
+C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm(65): warning: .cseg .db misalignment - padding zero byte
+000004 0055                          .db 0b0000000101010101
                                  
                                  main:
-000003 e0f0                          ldi ZH, high(string << 1)   ; initialize Z point to string's address
-000004 e0e0                          ldi ZL, low(string << 1)
-000005 2700                          clr R16                     ; initialize registers for getting result
-000006 2711                          clr R17
-000007 d001                          rcall atoi
-                                 end:
-000008 cfff                          rjmp end
+                                     ; initialze constants
+000005 e0a0                          ldi zero, 0
+000006 e0b1                          ldi one, 1
+                                     ; configure the input and output mode of ports
+000007 b303                          in Configue, DDRG
+000008 6300                          ori Configue, 0b00110000
+000009 bb03                          out DDRG, Configue  ; set PG2 and PG3 output mode
+00000a ef0f                          ser Configue
+00000b b907                          out DDRC, Configue  ; set PC0 ~ PC7 output mode
+00000c b10a                          in Configue, DDRD
+00000d 7e07                          andi Configue, 0b11100111
+00000e b90a                          out DDRD, Configue  ; set PD3 and PD4 input mode
+00000f 0000                          nop
+000010 b10b                          in Configue, PORTD
+000011 6108                          ori Configue, 0b00011000
+000012 b90b                          out PORTD, Configue ; active pull-up resister of PD3 and PD4
                                  
+                                 show_init:
+                                     ; reset loop counter, and address pointer
+000013 e033                          ldi show_loop_counter, show_loop_times - 1
+000014 e0f0                          ldi ZH, high(patterns << 1)
+000015 e0e2                          ldi ZL, low(patterns << 1)
                                  
-                                 atoi:
-                                     ; Prologue
-000009 93cf                          push YL
-00000a 93df                          push YH
-00000b 93ef                      	push ZL
-00000c 93ff                      	push ZH
-00000d 932f                          push i
-00000e 933f                          push c
-00000f 934f                          push zero
-000010 935f                          push ten
-000011 921f                      	push r1
-000012 920f                      	push r0
-000013 b7cd                          in YL, SPL
-000014 b7de                          in YH, SPH
-000015 9720                          sbiw Y, 0
-000016 bfde                          out SPH, YH
-000017 bfcd                          out SPL, YL
-                                     ; Function body
-                                 loop:
-000018 e040                          ldi zero, 0     ; initialize some constant value
-000019 e05a                          ldi ten, 10
-00001a 9135                          lpm c, Z+       ; retrive char in string to c
-00001b 3330                          cpi c, '0'
-00001c f068                          brlo return     ; if char is less than '0'
-00001d 333a                          cpi c, '9'+1          
-00001e f458                          brsh return     ; if char is greater than '9'
-00001f 5330                          subi c, '0'     ; c = c - '0'
-000020 9f05                          mul n_MSB, ten  ; n = n * 10
-000021 1614                      	cp r1, zero		
-000022 f439                      	brne return		; r1 != 0 --> n_MSB * 10 overflow --> n > 65536
-000023 2d00                          mov n_MSB, r0
-000024 9f15                          mul n_LSB, ten
-000025 2d10                          mov n_LSB, r0
-000026 0d01                          add n_MSB, r1
-000027 0f13                          add n_LSB, c	; n = n + c
-000028 1f04                          adc n_MSB, zero
-000029 cfee                          rjmp loop
-                                 return:
-                                     ; Epilogue
-00002a 9620                          adiw Y, 0
-00002b bfde                          out SPH, YH
-00002c bfcd                          out SPL, YL
-00002d 900f                      	pop r0
-00002e 901f                      	pop r1
-00002f 915f                          pop ten
-000030 914f                          pop zero
-000031 913f                          pop c
-000032 912f                          pop i
-000033 91ff                      	pop ZH
-000034 91ef                      	pop ZL
-000035 91df                          pop YH
-000036 91cf                          pop YL
-000037 9508                          ret
+                                 show_loop:
+                                 ; Delay in this block:  
+                                 ;               instruction     clock cycles
+                                 ;               ----------------------------
+                                 ;               dec             1
+                                 ;               cpi             1
+                                 ;               brlo            1(not jump)
+                                 ;               lpm             3
+                                 ;               lpm             3
+                                 ;               in              1
+                                 ;               andi            1
+                                 ;               or              1
+                                 ;               out             1
+                                 ;               out             1
+                                 ;               -------------------
+                                 ;               overall         14
+                                 ;
+                                     ; load patterns from program memory
+000016 9115                          lpm Pattern_Low, Z+
+000017 9125                          lpm Pattern_High, Z+
+                                     ; show pattern in LED0 and LED1
+000018 b304                          in Configue, PORTG          ; load current port G
+000019 7c0f                          andi Configue, 0b11001111   ; set bit 2 and bit 3 equal to 0
+00001a 2b01                          or Configue, Pattern_Low    ; set bit 2 and bit 3 from pattern
+00001b bb04                          out PORTG, Configue         ; output to PG2 and PG3
+                                     ; show pattern in LED2 to LED9
+00001c b928                          out PORTC, Pattern_High
                                  
+                                 wait_init:
+                                 ; Delay in this block:  
+                                 ;               instruction     clock cycles
+                                 ;               ----------------------------
+                                 ;               ldi             1
+                                 ;               ldi             1
+                                 ;               ldi             1
+                                 ;               clr             1
+                                 ;               clr             1
+                                 ;               clr             1
+                                 ;               -------------------
+                                 ;               overall         6
+                                 ;
+00001d ea4f                          ldi wait_loop_counter_1, low(wait_loop_times)
+00001e ec57                          ldi wait_loop_counter_2, high(wait_loop_times)
+00001f e162                          ldi wait_loop_counter_3, byte3(wait_loop_times)
+000020 2777                          clr i_1
+000021 2788                          clr i_2
+000022 2799                          clr i_3
+                                 
+                                 wait_loop:
+                                 ; Delay in this block:  
+                                 ;               instruction     clock cycles
+                                 ;               ----------------------------
+                                 ;               add             1
+                                 ;               adc             1
+                                 ;               adc             1
+                                 ;               cp              1
+                                 ;               cpc             1
+                                 ;               cpc             1
+                                 ;               brsh            1(not jump)
+                                 ;               sbic            2
+                                 ;               rjmp            0(won't excute)
+                                 ;               sbic            2
+                                 ;               rjmp            0(won't excute)
+                                 ;               rjmp            2
+                                 ;               -------------------
+                                 ;               overall         
+                                 ;
+000023 0f7b                          add i_1, one
+000024 1f8a                          adc i_2, zero
+000025 1f9a                          adc i_3, zero
+000026 1774                          cp i_1, wait_loop_counter_1
+000027 0785                          cpc i_2, wait_loop_counter_2
+000028 0796                          cpc i_3, wait_loop_counter_3
+000029 f428                          brsh wait_end
+                                     ; when push PD3 or PD4, jump to halt
+00002a 994b                          sbic PIND, 3
+                                     ; sbis PIND, 3
+00002b c007                          rjmp halt
+00002c 994c                          sbic PIND, 4
+                                     ; sbis PIND, 4
+00002d c005                          rjmp halt
+00002e cff4                          rjmp wait_loop
+                                 
+                                 wait_end:
+                                 ; Delay in this block:  
+                                 ;               instruction     clock cycles
+                                 ;               ----------------------------
+                                 ;               dec             1
+                                 ;               cpi             1
+                                 ;               brlo            1(not jump)
+                                 ;               rjmp            2    
+                                 ;               -------------------
+                                 ;               overall         5
+                                 ;
+                                     ; loop 'loop_times' times
+00002f 953a                          dec show_loop_counter
+000030 3030                          cpi show_loop_counter, 0
+000031 f308                          brlo show_init
+000032 cfe3                          rjmp show_loop
+                                 
+                                 halt:
+                                     ; sbic PIND, 3
+000033 9b4b                          sbis PIND, 3
+000034 cffa                          rjmp wait_end
+                                     ; sbic PIND, 4
+000035 9b4c                          sbis PIND, 4
+000036 cff8                          rjmp wait_end
+000037 cffb                          rjmp halt
+                                     
+                                 end: 
 
 
 RESOURCE USE INFORMATION
@@ -1991,41 +2109,41 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega2560" register use summary:
-x  :   0 y  :   2 z  :   1 r0 :   4 r1 :   4 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   5 r17:   4 r18:   2 r19:   7 r20:   5 
-r21:   5 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   5 
-r29:   5 r30:   3 r31:   3 
-Registers used: 14 out of 35 (40.0%)
+r13:   0 r14:   0 r15:   0 r16:  15 r17:   2 r18:   2 r19:   3 r20:   2 
+r21:   2 r22:   2 r23:   3 r24:   3 r25:   3 r26:   3 r27:   2 r28:   0 
+r29:   0 r30:   1 r31:   1 
+Registers used: 15 out of 35 (42.9%)
 
 "ATmega2560" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   1 add   :   2 adiw  :   1 and   :   0 
-andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+.lds  :   0 .sts  :   0 adc   :   2 add   :   1 adiw  :   0 and   :   0 
+andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   0 brsh  :   1 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   0 brpl  :   0 brsh  :   1 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   2 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   0 
-cpi   :   2 cpse  :   0 dec   :   0 eicall:   0 eijmp :   0 elpm  :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   3 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   2 
+cpi   :   1 cpse  :   0 dec   :   1 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   2 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   4 
-lds   :   0 lpm   :   1 lsl   :   0 lsr   :   0 mov   :   2 movw  :   0 
-mul   :   2 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :   4 pop   :  10 push  :  10 rcall :   1 ret   :   1 
-reti  :   0 rjmp  :   2 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
-sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   1 sbr   :   0 sbrc  :   0 
-sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
+in    :   4 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :   8 
+lds   :   0 lpm   :   2 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 
+mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   1 or    :   1 
+ori   :   2 out   :   6 pop   :   0 push  :   0 rcall :   0 ret   :   0 
+reti  :   0 rjmp  :   9 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+sbi   :   0 sbic  :   2 sbis  :   2 sbiw  :   0 sbr   :   0 sbrc  :   0 
+sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   1 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
-st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   1 swap  :   0 
+st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 22 out of 116 (19.0%)
+Instructions used: 21 out of 116 (18.1%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000070    106      6    112  262144   0.0%
+[.cseg] 0x000000 0x000072    106      8    114  262144   0.0%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 
-Assembly complete, 0 errors, 0 warnings
+Assembly complete, 0 errors, 6 warnings
