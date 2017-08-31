@@ -45,11 +45,12 @@
 .def wait_loop_counter_1 = R20
 .def wait_loop_counter_2 = R21
 .def wait_loop_counter_3 = R22
-.def i_1 = R23
-.def i_2 = R24
-.def i_3 = R25
-.def zero = R26
-.def one = R27
+.def zero = R23
+.def one = R24
+.def i_1 = R2
+.def i_2 = R3
+.def i_3 = R4
+
 
 .equ show_loop_times = 4
 .equ wait_loop_times = 1230767
@@ -59,10 +60,10 @@
 rjmp main                       
 patterns:
     ; only the least significant 10 bits are valid
-    .db 0b0000000000011111
-    .db 0b0000001111100000
-    .db 0b0000001010101010
-    .db 0b0000000101010101
+    .db 0b00000000, 0b00111111	;0x003F
+    .db 0b00000011, 0b11100000	;0x03E0
+    .db 0b00000010, 0b10101010	;0x02AA
+    .db 0b00000001, 0b01010101	;0x0155
 
 main:
     ; initialze constants

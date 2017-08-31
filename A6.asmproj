@@ -12,7 +12,7 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <Language>ASSEMBLY</Language>
     <AssemblyName>OpenMe</AssemblyName>
-    <Name>COMP9032_Lab</Name>
+    <Name>A6</Name>
     <RootNamespace>OpenMe</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <EntryFile>$(MSBuildProjectDirectory)\lab3_Task1_Jack.asm</EntryFile>
