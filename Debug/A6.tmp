@@ -22,14 +22,16 @@
   <FILE>A6.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <main><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>68</LINE></main>
-  <patterns><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>61</LINE></patterns>
-  <show_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>86</LINE></show_init>
-  <show_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>92</LINE></show_loop>
-  <wait_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>120</LINE></wait_init>
-  <wait_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>140</LINE></wait_loop>
-  <wait_end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>175</LINE></wait_end>
-  <halt><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>192</LINE></halt>
-  <end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>201</LINE></end>
+  <main><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>101</LINE></main>
+  <patterns><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>94</LINE></patterns>
+  <show_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>119</LINE></show_init>
+  <show_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>125</LINE></show_loop>
+  <wait_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>137</LINE></wait_init>
+  <wait_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>145</LINE></wait_loop>
+  <wait_end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>174</LINE></wait_end>
+  <halt><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>180</LINE></halt>
+  <check><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>183</LINE></check>
+  <resume><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>191</LINE></resume>
+  <end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>195</LINE></end>
  </LABELS>
 </ASSEMBLER_INFO>

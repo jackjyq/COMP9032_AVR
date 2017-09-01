@@ -1,5 +1,5 @@
-; Author: Jack (z5129432)
-; Date: 
+; Author: Jack Jiang(z5129432)
+; Date: 1/09/2017
 ; Version: 1
 ; Wiring diagram: 
 ;           LED:
@@ -18,49 +18,82 @@
 ;           Button PB0 -- PD4
 ;           Button PB1 -- PD3
 ;
-; Delay calculation:
-; CPU frequency: 16MHz
-; Delay time:    1 Sec
-; clock cycles: 16 000 000
-;
-; clock cycles out of wait loop:
-;               block           clock cycles
-;               ----------------------------
-;               show_loop       14
-;               wait_int        6
-;               wait_end        5
-;               -------------------
-;               overall         25
-;
-; clock cycles with in wait loop
-; overall clock cycles needed = 15999975
-; clock cycles in one wait_loop = 13
-; wait_loop_time = 15999975 / 13 = 1230767
 .include "m2560def.inc"
 
-.def Configue = R16
+.def i_1 = R2	; work with loop_counters
+.def i_2 = R3	; work with loop_counters
+.def i_3 = R4	; work with loop_counters
+.def Configue = R16		; used for input and output
 .def Pattern_Low = R17
 .def Pattern_High = R18
-.def show_loop_counter = R19
-.def wait_loop_counter_1 = R20
-.def wait_loop_counter_2 = R21
-.def wait_loop_counter_3 = R22
-.def zero = R23
-.def one = R24
-.def i_1 = R2
-.def i_2 = R3
-.def i_3 = R4
+.def show_loop_counter = R19	
+.def loop_counter_1 = R20	; delay loop counter
+.def loop_counter_2 = R21	; delay loop counter
+.def loop_counter_3 = R22	; delay loop counter
+.def zero = R23		; constant 0
+.def one = R24		; constant 1
 
-
+; number of patterns
 .equ show_loop_times = 4
-.equ wait_loop_times = 1230767
+
+; Wait calculation:
+; CPU frequency: 16MHz
+; Delay time:    1 Sec
+; Total clock cycles = 16_000_000
+; Unit clock cycle = 13
+; Loop times = 16_000_000 / 13 = 1230769
+.equ wait_loop_times = 1_230_769
+
+; Delay calculation:
+; CPU frequency: 16MHz
+; Delay time:    200ms
+; Total clock cycles = 16_000_000 * 0.2 = 3_200_000
+; Unit clock cycle = 9
+; Loop times = 3_200_000 / 9 = 355_555
+.equ delay_loop_times = 355_555
+
+; Delay before checking input in order to avoid misbehaviour
+.macro bufferDelay
+
+delay_init:
+    ldi loop_counter_1, low(delay_loop_times)
+    ldi loop_counter_2, high(delay_loop_times)
+    ldi loop_counter_3, byte3(delay_loop_times)
+    clr i_1
+    clr i_2
+    clr i_3
+delay_loop:
+; Delay in this block:  
+;               instruction     clock cycles
+;               ----------------------------
+;               add             1
+;               adc             1
+;               adc             1
+;               cp              1
+;               cpc             1
+;               cpc             1
+;               brsh            1(not jump)
+;               rjmp            2
+;               -------------------
+;               overall         13
+;
+    add i_1, one
+    adc i_2, zero
+    adc i_3, zero
+    cp i_1, loop_counter_1
+    cpc i_2, loop_counter_2
+    cpc i_3, loop_counter_3
+    brsh delay_end
+    rjmp delay_loop
+delay_end:
+.endmacro
 
 ; code/program memory, constants, starts from 0x0000
                .cseg
 rjmp main                       
 patterns:
     ; only the least significant 10 bits are valid
-    .db 0b00000000, 0b00111111	;0x003F
+    .db 0b00000000, 0b00011111	;0x001F
     .db 0b00000011, 0b11100000	;0x03E0
     .db 0b00000010, 0b10101010	;0x02AA
     .db 0b00000001, 0b01010101	;0x0155
@@ -71,68 +104,40 @@ main:
     ldi one, 1
     ; configure the input and output mode of ports
     in Configue, DDRG
-    ori Configue, 0b00110000
-    out DDRG, Configue  ; set PG2 and PG3 output mode
+    ori Configue, 0b00000011
+    out DDRG, Configue  ; set PG0 and PG1 output mode
     ser Configue
     out DDRC, Configue  ; set PC0 ~ PC7 output mode
     in Configue, DDRD
-    andi Configue, 0b11100111
-    out DDRD, Configue  ; set PD3 and PD4 input mode
+    andi Configue, 0b11111100
+    out DDRD, Configue  ; set PD0 and PD1 input mode
     nop
     in Configue, PORTD
-    ori Configue, 0b00011000
-    out PORTD, Configue ; active pull-up resister of PD3 and PD4
+    ori Configue, 0b00000011
+    out PORTD, Configue ; active pull-up resister of PD0 and PD1
 
 show_init:
     ; reset loop counter, and address pointer
-    ldi show_loop_counter, show_loop_times - 1
+    ldi show_loop_counter, 0
     ldi ZH, high(patterns << 1)
     ldi ZL, low(patterns << 1)
 
 show_loop:
-; Delay in this block:  
-;               instruction     clock cycles
-;               ----------------------------
-;               dec             1
-;               cpi             1
-;               brlo            1(not jump)
-;               lpm             3
-;               lpm             3
-;               in              1
-;               andi            1
-;               or              1
-;               out             1
-;               out             1
-;               -------------------
-;               overall         14
-;
     ; load patterns from program memory
     lpm Pattern_Low, Z+
     lpm Pattern_High, Z+
     ; show pattern in LED0 and LED1
-    in Configue, PORTG          ; load current port G
-    andi Configue, 0b11001111   ; set bit 2 and bit 3 equal to 0
-    or Configue, Pattern_Low    ; set bit 2 and bit 3 from pattern
-    out PORTG, Configue         ; output to PG2 and PG3
+    in Configue, PORTG				; load current port G
+    andi Configue, 0b11111100		; set bit 0 and bit 1 equal to 0
+    or Configue, Pattern_Low	; set bit 2 and bit 3 from pattern
+    out PORTG, Configue				; output to PG0 and PG1
     ; show pattern in LED2 to LED9
     out PORTC, Pattern_High
 
 wait_init:
-; Delay in this block:  
-;               instruction     clock cycles
-;               ----------------------------
-;               ldi             1
-;               ldi             1
-;               ldi             1
-;               clr             1
-;               clr             1
-;               clr             1
-;               -------------------
-;               overall         6
-;
-    ldi wait_loop_counter_1, low(wait_loop_times)
-    ldi wait_loop_counter_2, high(wait_loop_times)
-    ldi wait_loop_counter_3, byte3(wait_loop_times)
+    ldi loop_counter_1, low(wait_loop_times)
+    ldi loop_counter_2, high(wait_loop_times)
+    ldi loop_counter_3, byte3(wait_loop_times)
     clr i_1
     clr i_2
     clr i_3
@@ -148,55 +153,45 @@ wait_loop:
 ;               cpc             1
 ;               cpc             1
 ;               brsh            1(not jump)
-;               sbic            2
-;               rjmp            0(won't excute)
-;               sbic            2
-;               rjmp            0(won't excute)
 ;               rjmp            2
 ;               -------------------
-;               overall         
+;               overall         9
 ;
     add i_1, one
     adc i_2, zero
     adc i_3, zero
-    cp i_1, wait_loop_counter_1
-    cpc i_2, wait_loop_counter_2
-    cpc i_3, wait_loop_counter_3
+    cp i_1, loop_counter_1
+    cpc i_2, loop_counter_2
+    cpc i_3, loop_counter_3
     brsh wait_end
-    ; when push PD3 or PD4, jump to halt
-    sbic PIND, 3
-    ; sbis PIND, 3
+    ; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to halt
+    sbis PIND, 0
     rjmp halt
-    sbic PIND, 4
-    ; sbis PIND, 4
+    sbis PIND, 1
     rjmp halt
     rjmp wait_loop
 
 wait_end:
-; Delay in this block:  
-;               instruction     clock cycles
-;               ----------------------------
-;               dec             1
-;               cpi             1
-;               brlo            1(not jump)
-;               rjmp            2    
-;               -------------------
-;               overall         5
-;
-    ; loop 'loop_times' times
-    dec show_loop_counter
-    cpi show_loop_counter, 0
-    brlo show_init
+    inc show_loop_counter
+    cpi show_loop_counter, show_loop_times
+    brsh show_init
     rjmp show_loop
 
 halt:
-    ; sbic PIND, 3
-    sbis PIND, 3
+    bufferDelay   ; add some buffer before checking next input
+
+check:
+	; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to resume
+    sbis PIND, 0
+    rjmp resume
+    sbis PIND, 1
+    rjmp resume
+    rjmp check
+
+resume:
+    bufferDelay   ; add some buffer before checking next input
     rjmp wait_end
-    ; sbic PIND, 4
-    sbis PIND, 4
-    rjmp wait_end
-    rjmp halt
-    
+
 end: 
     rjmp end
+

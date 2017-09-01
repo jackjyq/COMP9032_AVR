@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm Thu Aug 31 14:21:08 2017
+AVRASM ver. 2.2.6  C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm Fri Sep 01 18:40:28 2017
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1359,20 +1359,21 @@ EQU  URXC3addr    0000006c
 EQU  UDRE3addr    0000006e
 EQU  UTXC3addr    00000070
 EQU  INT_VECTORS_SIZE 00000072
+DEF  i_1          r2
+DEF  i_2          r3
+DEF  i_3          r4
 DEF  Configue     r16
 DEF  Pattern_Low  r17
 DEF  Pattern_High r18
 DEF  show_loop_counter r19
-DEF  wait_loop_counter_1 r20
-DEF  wait_loop_counter_2 r21
-DEF  wait_loop_counter_3 r22
+DEF  loop_counter_1 r20
+DEF  loop_counter_2 r21
+DEF  loop_counter_3 r22
 DEF  zero         r23
 DEF  one          r24
-DEF  i_1          r2
-DEF  i_2          r3
-DEF  i_3          r4
 EQU  show_loop_times 00000004
-EQU  wait_loop_times 0012c7af
+EQU  wait_loop_times 0012c7b1
+EQU  delay_loop_times 00056ce3
 CSEG main         00000005
 CSEG patterns     00000001
 CSEG show_init    00000013
@@ -1381,4 +1382,12 @@ CSEG wait_init    0000001d
 CSEG wait_loop    00000023
 CSEG wait_end     0000002f
 CSEG halt         00000033
-CSEG end          00000038
+CSEG delay_init@bufferDelay@3854 00000033
+CSEG delay_loop@bufferDelay@3854 00000039
+CSEG delay_end@bufferDelay@3854 00000041
+CSEG check        00000041
+CSEG resume       00000046
+CSEG delay_init@bufferDelay@3899 00000046
+CSEG delay_loop@bufferDelay@3899 0000004c
+CSEG delay_end@bufferDelay@3899 00000054
+CSEG end          00000055
