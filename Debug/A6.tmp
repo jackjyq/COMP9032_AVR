@@ -1,18 +1,18 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.6</VERSION>
  <DEVICE>"ATmega2560"</DEVICE>
- <WORKING_DIR>C:\Users\z5129432\GitHub\COMP9032_AVR\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\jackj\Github\COMP9032_AVR\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\Debug\A6.obj</FILE>
+  <FILE>C:\Users\jackj\Github\COMP9032_AVR\Debug\A6.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>A6.hex</FILE>
@@ -22,16 +22,17 @@
   <FILE>A6.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <main><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>101</LINE></main>
-  <patterns><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>94</LINE></patterns>
-  <show_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>119</LINE></show_init>
-  <show_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>125</LINE></show_loop>
-  <wait_init><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>137</LINE></wait_init>
-  <wait_loop><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>145</LINE></wait_loop>
-  <wait_end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>174</LINE></wait_end>
-  <halt><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>180</LINE></halt>
-  <check><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>183</LINE></check>
-  <resume><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>191</LINE></resume>
-  <end><FILE>C:\Users\z5129432\GitHub\COMP9032_AVR\lab3_Task1_Jack.asm</FILE><LINE>195</LINE></end>
+  <main><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>103</LINE></main>
+  <EXT_INT0><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>204</LINE></EXT_INT0>
+  <patterns><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>95</LINE></patterns>
+  <show_init><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>128</LINE></show_init>
+  <show_loop><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>134</LINE></show_loop>
+  <wait_init><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>146</LINE></wait_init>
+  <wait_loop><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>154</LINE></wait_loop>
+  <wait_end><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>183</LINE></wait_end>
+  <halt><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>189</LINE></halt>
+  <check><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>192</LINE></check>
+  <resume><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>200</LINE></resume>
+  <end><FILE>C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm</FILE><LINE>213</LINE></end>
  </LABELS>
 </ASSEMBLER_INFO>
