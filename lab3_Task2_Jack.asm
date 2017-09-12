@@ -174,10 +174,10 @@ wait_loop:
     cpc i_3, loop_counter_3
     brsh wait_end
     ; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to halt
-    sbis PIND, 0
-    rjmp halt
-    sbis PIND, 1
-    rjmp halt
+    ;sbis PIND, 0
+    ;rjmp halt
+    ;sbis PIND, 1
+    ;rjmp halt
     rjmp wait_loop
 
 wait_end:

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.6  C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm Tue Sep 05 20:35:00 2017
+AVRASM ver. 2.2.6  C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm Tue Sep 12 19:16:01 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
 C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
@@ -1978,7 +1978,7 @@ C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/P
                                  
 000000 c006                      rjmp main
                                  .org INT0addr
-000002 c05b                      	rjmp EXT_INT0
+000002 c057                      	rjmp EXT_INT0
                                  .cseg               
                                  patterns:
                                      ; only the least significant 10 bits are valid
@@ -2060,72 +2060,72 @@ C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/P
 00002f 1624                          cp i_1, loop_counter_1
 000030 0635                          cpc i_2, loop_counter_2
 000031 0646                          cpc i_3, loop_counter_3
-000032 f428                          brsh wait_end
+000032 f408                          brsh wait_end
                                      ; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to halt
-000033 9b48                          sbis PIND, 0
-000034 c007                          rjmp halt
-000035 9b49                          sbis PIND, 1
-000036 c005                          rjmp halt
-000037 cff4                          rjmp wait_loop
+                                     ;sbis PIND, 0
+                                     ;rjmp halt
+                                     ;sbis PIND, 1
+                                     ;rjmp halt
+000033 cff8                          rjmp wait_loop
                                  
                                  wait_end:
-000038 9533                          inc show_loop_counter
-000039 3034                          cpi show_loop_counter, show_loop_times
-00003a f708                          brsh show_init
-00003b cfe3                          rjmp show_loop
+000034 9533                          inc show_loop_counter
+000035 3034                          cpi show_loop_counter, show_loop_times
+000036 f728                          brsh show_init
+000037 cfe7                          rjmp show_loop
                                  
                                  halt:
-00003c ee43
-00003d e65c
-00003e e065
-00003f 2422
-000040 2433
-000041 2444
-000042 0e28
-000043 1e37
-000044 1e47
-000045 1624
-000046 0635
-000047 0646
-000048 f408
-000049 cff8                          bufferDelay   ; add some buffer before checking next input
+000038 ee43
+000039 e65c
+00003a e065
+00003b 2422
+00003c 2433
+00003d 2444
+00003e 0e28
+00003f 1e37
+000040 1e47
+000041 1624
+000042 0635
+000043 0646
+000044 f408
+000045 cff8                          bufferDelay   ; add some buffer before checking next input
                                  
                                  check:
                                  	; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to resume
-00004a 9b48                          sbis PIND, 0
-00004b c003                          rjmp resume
-00004c 9b49                          sbis PIND, 1
-00004d c001                          rjmp resume
-00004e cffb                          rjmp check
+000046 9b48                          sbis PIND, 0
+000047 c003                          rjmp resume
+000048 9b49                          sbis PIND, 1
+000049 c001                          rjmp resume
+00004a cffb                          rjmp check
                                  
                                  resume:
-00004f ee43
-000050 e65c
-000051 e065
-000052 2422
-000053 2433
-000054 2444
-000055 0e28
-000056 1e37
-000057 1e47
-000058 1624
-000059 0635
-00005a 0646
-00005b f408
-00005c cff8                          bufferDelay   ; add some buffer before checking next input
-00005d cfda                          rjmp wait_end
+00004b ee43
+00004c e65c
+00004d e065
+00004e 2422
+00004f 2433
+000050 2444
+000051 0e28
+000052 1e37
+000053 1e47
+000054 1624
+000055 0635
+000056 0646
+000057 f408
+000058 cff8                          bufferDelay   ; add some buffer before checking next input
+000059 cfda                          rjmp wait_end
                                  
                                  EXT_INT0:
                                      ; show pattern in LED0 and LED1
-00005e b304                          in Configue, PORTG				; load current port G
-00005f 7f0c                          andi Configue, 0b11111100		; set bit 0 and bit 1 to 0
-000060 bb04                          out PORTG, Configue				; output to PG0 and PG1
+00005a b304                          in Configue, PORTG				; load current port G
+00005b 7f0c                          andi Configue, 0b11111100		; set bit 0 and bit 1 to 0
+00005c bb04                          out PORTG, Configue				; output to PG0 and PG1
                                      ; show pattern in LED2 to LED9
-000061 e000                          ldi Configue, 0b00000000        ; set all bits to 0
-000062 b908                          out PORTC, Configue
+00005d e000                          ldi Configue, 0b00000000        ; set all bits to 0
+00005e b908                          out PORTC, Configue
                                      
                                  end: 
-000063 cfff                          rjmp end
+00005f cfff                          rjmp end
                                  
 
 
@@ -2166,8 +2166,8 @@ in    :   6 inc   :   1 jmp   :   0 ld    :   0 ldd   :   0 ldi   :  16
 lds   :   0 lpm   :   2 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 
 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   1 or    :   1 
 ori   :   3 out   :   9 pop   :   0 push  :   0 rcall :   0 ret   :   0 
-reti  :   0 rjmp  :  13 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
-sbi   :   0 sbic  :   0 sbis  :   4 sbiw  :   0 sbr   :   0 sbrc  :   0 
+reti  :   0 rjmp  :  11 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+sbi   :   0 sbic  :   0 sbis  :   2 sbiw  :   0 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   1 sen   :   0 ser   :   1 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   0 std   :   0 sts   :   1 sub   :   0 subi  :   0 swap  :   0 
@@ -2177,7 +2177,7 @@ Instructions used: 21 out of 116 (18.1%)
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000c8    190      8    198  262144   0.1%
+[.cseg] 0x000000 0x0000c0    182      8    190  262144   0.1%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 
