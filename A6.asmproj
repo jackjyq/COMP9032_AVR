@@ -15,7 +15,7 @@
     <Name>A6</Name>
     <RootNamespace>OpenMe</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <EntryFile>$(MSBuildProjectDirectory)\lab3_Task2_Jack.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\Lab3_Task3_Jack.asm</EntryFile>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
@@ -93,7 +93,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="lab3_Task2_Jack.asm">
+    <Compile Include="Lab3_Task3_Jack.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lab3_Task3_WS.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

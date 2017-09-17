@@ -1,12 +1,12 @@
 
-AVRASM ver. 2.2.6  C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm Tue Sep 12 19:16:01 2017
+AVRASM ver. 2.2.6  C:\Users\jackj\Github\COMP9032_AVR\Lab3_Task3_Jack.asm Sun Sep 17 20:16:02 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Lab3_Task3_Jack.asm(25): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Lab3_Task3_Jack.asm(25): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
                                  
-                                 ; Author: Jack Jiang(z5129432)
+                                 ; Author: Jack (z5129432)
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
                                  ;*************************************************************************
@@ -1844,10 +1844,18 @@ C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/P
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 ; Date: 5/09/2017
+                                 ; Date: 12/09/2017
                                  ; Version: 1
-                                 ; Wiring diagram: 
-                                 ;           LED:
+                                 ; Hardware diagram:                  
+                                 ;
+                                 ;   Keypad:
+                                 ;   R3(PL4)    1        2       3       A
+                                 ;   R2(PL5)    4        5       6       B
+                                 ;   R1(PL6)    7        8       9       C
+                                 ;   R0(PL7)    *        0       #       D
+                                 ;           C0(PL3) C1(PL2) C2(PL1) C3(PL0)
+                                 ;
+                                 ;           LEDs:
                                  ;           LED0 -- PG2
                                  ;           LED1 -- PG3
                                  ;           LED2 -- PC0
@@ -1858,11 +1866,7 @@ C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/P
                                  ;           LED7 -- PC5
                                  ;           LED8 -- PC6
                                  ;           LED9 -- PC7
-                                 ;           
-                                 ;           INPUTS:
-                                 ;           Button PB0 -- PD0 --- Use INT0 to stop the LEDs
-                                 ;           Button PB1 -- PD1 --- Use to halt/resume the partern
-                                 ;
+                                 
                                  .include "m2560def.inc"
                                  
                                  ;***** Created: 2011-02-09 12:03 ******* Source: ATmega2560.xml **********
@@ -1908,225 +1912,450 @@ C:\Users\jackj\Github\COMP9032_AVR\lab3_Task2_Jack.asm(21): Including file 'C:/P
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 .def i_1 = R2	; work with loop_counters
-                                 .def i_2 = R3	; work with loop_counters
-                                 .def i_3 = R4	; work with loop_counters
-                                 .def Configue = R16		; used for input and output
-                                 .def Pattern_Low = R17
-                                 .def Pattern_High = R18
-                                 .def show_loop_counter = R19	
-                                 .def loop_counter_1 = R20	; delay loop counter
-                                 .def loop_counter_2 = R21	; delay loop counter
-                                 .def loop_counter_3 = R22	; delay loop counter
-                                 .def zero = R23		; constant 0
-                                 .def one = R24		; constant 1
+                                 .def config=R16
+                                 .def key=R17
+                                 .def temp=R18
+                                 .def a=R19
+                                 .def b=R20
+                                 .def c=R21
+                                 .def delay_1=R22
+                                 .def delay_2=R23
+                                 .def delay_3=R24
                                  
-                                 ; number of patterns
-                                 .equ show_loop_times = 4
-                                 
-                                 ; Wait calculation:
+                                 ; delay loop times:
                                  ; CPU frequency: 16MHz
-                                 ; Delay time:    1 Sec
-                                 ; Total clock cycles = 16_000_000
                                  ; Unit clock cycle = 13
-                                 ; Loop times = 16_000_000 / 13 = 1230769
-                                 .equ wait_loop_times = 1_230_769
+                                 .equ overflow_delay = 200_000
+                                 .equ clear_result_delay = 1_500_000
+                                 .equ key_scan_delay=20
                                  
-                                 ; Delay calculation:
-                                 ; CPU frequency: 16MHz
-                                 ; Delay time:    200ms
-                                 ; Total clock cycles = 16_000_000 * 0.2 = 3_200_000
-                                 ; Unit clock cycle = 9
-                                 ; Loop times = 3_200_000 / 9 = 355_555
-                                 .equ delay_loop_times = 355_555
                                  
-                                 ; Delay before checking input in order to avoid misbehaviour
-                                 .macro bufferDelay
+                                 ; function declaration
+000000 c115                      rjmp reset
                                  
-                                 delay_init:
-                                     ldi loop_counter_1, low(delay_loop_times)
-                                     ldi loop_counter_2, high(delay_loop_times)
-                                     ldi loop_counter_3, byte3(delay_loop_times)
-                                     clr i_1
-                                     clr i_2
-                                     clr i_3
-                                 delay_loop:
-                                 ; Delay in this block:  
-                                 ;               instruction     clock cycles
-                                 ;               ----------------------------
-                                 ;               add             1
-                                 ;               adc             1
-                                 ;               adc             1
-                                 ;               cp              1
-                                 ;               cpc             1
-                                 ;               cpc             1
-                                 ;               brsh            1(not jump)
-                                 ;               rjmp            2
-                                 ;               -------------------
-                                 ;               overall         13
-                                 ;
-                                     add i_1, one
-                                     adc i_2, zero
-                                     adc i_3, zero
-                                     cp i_1, loop_counter_1
-                                     cpc i_2, loop_counter_2
-                                     cpc i_3, loop_counter_3
-                                     brsh delay_end
-                                     rjmp delay_loop
-                                 delay_end:
-                                 .endmacro
                                  
-000000 c006                      rjmp main
-                                 .org INT0addr
-000002 c057                      	rjmp EXT_INT0
-                                 .cseg               
-                                 patterns:
-                                     ; only the least significant 10 bits are valid
-000003 1f00                          .db 0b00000000, 0b00011111	;0x001F
-000004 e003                          .db 0b00000011, 0b11100000	;0x03E0
-000005 aa02                          .db 0b00000010, 0b10101010	;0x02AA
-000006 5501                          .db 0b00000001, 0b01010101	;0x0155
+                                 delay:
+000001 936f                          push delay_1
+000002 937f                          push delay_2
+000003 938f                          push delay_3
+000004 933f                          push a
+000005 934f                          push b
+000006 935f                          push c
+000007 930f                          push config
+000008 932f                          push temp
+                                     delay_init:
+000009 2733                              clr a
+00000a 2744                              clr b
+00000b 2755                              clr c
+00000c e000                              ldi config, 0
+00000d e021                              ldi temp, 1
+                                     delay_loop:
+                                         ; clock cycles in this block:  
+                                         ;               instruction     clock cycles
+                                         ;               ----------------------------
+                                         ;               add             1
+                                         ;               adc             1
+                                         ;               adc             1
+                                         ;               cp              1
+                                         ;               cpc             1
+                                         ;               cpc             1
+                                         ;               brsh            1(not jump)
+                                         ;               rjmp            2
+                                         ;               -------------------
+                                         ;               overall         9
+                                         ;
+00000e 0f32                              add a, temp
+00000f 1f40                              adc b, config
+000010 1f50                              adc c, config
+000011 1736                              cp a, delay_1
+000012 0747                              cpc b, delay_2
+000013 0758                              cpc c, delay_3
+000014 f408                              brsh delay_end
+000015 cff8                              rjmp delay_loop
+                                     delay_end:
+000016 912f                              pop temp
+000017 910f                              pop config
+000018 915f                              pop c
+000019 914f                              pop b
+00001a 913f                              pop a
+00001b 918f                              pop delay_3
+00001c 917f                              pop delay_2
+00001d 916f                              pop delay_1
+00001e 9508                              ret
+                                 
+                                 
+                                 key_scan:
+                                     ; detect key press and stroe in register key
+                                     ;
+00001f 930f                          push config
+000020 932f                          push temp
+000021 936f                          push delay_1
+000022 937f                          push delay_2
+000023 938f                          push delay_3
+                                     ; column loop initialization
+000024 e164                          ldi delay_1, low(key_scan_delay)
+000025 e070                          ldi delay_2, high(key_scan_delay)
+000026 e080                          ldi delay_3, byte3(key_scan_delay)
+                                     scan_loop:
+                                         ; key(row):                                                invalid
+                                         ; 0000 1000 --> 0000 0100 --> 0000 0010 --> 0000 0001 --> 0000 0000 
+000027 e018                              ldi key, 0b0000_1000
+                                         col_scan:
+                                             ; Config = not Key = key - 0b1111_1111:                   invalid                           
+                                             ; 1111 0111 --> 0111 1011 --> 0011 1101 --> 0001 1110 --> 0000 1111    
+000028 2f21                                  mov temp, key
+000029 ef0f                      			ldi config, 0b1111_1111
+00002a 1b02                                  sub config, temp
+00002b 9300 010b                             STS PORTL, config
+00002d dfd3                                  rcall delay
+00002e e820                                      ldi temp, 0b1000_0000
+                                                     ; temp(column):                                             invalid
+                                                     ; 1000 0000 --> 0100 0000 --> 0010 0000 --> 0001 0000 --> 0000 1000
+                                                 row_scan:
+00002f 9100 0109                                     LDS config, PINL
+000031 2302                                          and config, temp    ; mask other bits
+000032 3000                                          cpi config, 0      ; zero mean having button pressed
+000033 f039                                          breq scan_end
+                                                     ; loop control
+000034 9526                                          lsr temp
+000035 3028                                          cpi temp, 0b0000_1000
+000036 f7c1                                          brne row_scan
+                                             ; column loop control
+000037 9516                                  lsr key
+000038 3010                                  cpi key, 0b0000_0000
+000039 f771                                  brne col_scan
+00003a cfec                              rjmp scan_loop
+                                     scan_end:
+00003b d007                              rcall no_key_press
+00003c 0f12                              add key, temp
+00003d 918f                              pop delay_3
+00003e 917f                              pop delay_2
+00003f 916f                              pop delay_1
+000040 912f                              pop temp
+000041 910f                              pop config
+000042 9508                              ret
+                                 
+                                 
+                                 no_key_press:
+                                     ; return when no key is pressed
+                                     ;
+000043 931f                          push key
+000044 930f                          push config
+000045 932f                          push temp
+000046 936f                          push delay_1
+000047 937f                          push delay_2
+000048 938f                          push delay_3
+                                     ; column loop initialization
+000049 e164                          ldi delay_1, low(key_scan_delay)
+00004a e070                          ldi delay_2, high(key_scan_delay)
+00004b e080                          ldi delay_3, byte3(key_scan_delay)
+                                     no_key_press_loop:
+                                         ; key(row):                                                invalid
+                                         ; 0000 1000 --> 0000 0100 --> 0000 0010 --> 0000 0001 --> 0000 0000 
+00004c e018                              ldi key, 0b0000_1000
+                                         no_key_press_col_scan:
+                                             ; Config = not Key = key - 0b1111_1111:                   invalid                           
+                                             ; 1111 0111 --> 0111 1011 --> 0011 1101 --> 0001 1110 --> 0000 1111    
+00004d 2f21                                  mov temp, key
+00004e ef0f                      			ldi config, 0b1111_1111
+00004f 1b02                                  sub config, temp
+000050 9300 010b                             STS PORTL, config
+000052 dfae                                  rcall delay
+000053 e820                                      ldi temp, 0b1000_0000
+                                                     ; temp(column):                                             invalid
+                                                     ; 1000 0000 --> 0100 0000 --> 0010 0000 --> 0001 0000 --> 0000 1000
+                                                 no_key_press_row_scan:
+000054 9100 0109                                     LDS config, PINL
+000056 2302                                          and config, temp    ; mask other bits
+000057 3000                                          cpi config, 0      ; zero mean having button pressed
+000058 f399                                          breq no_key_press_loop
+                                                     ; loop control
+000059 9526                                          lsr temp
+00005a 3028                                          cpi temp, 0b0000_1000
+00005b f7c1                                          brne no_key_press_row_scan
+                                             ; column loop control
+00005c 9516                                  lsr key
+00005d 3010                                  cpi key, 0b0000_0000
+00005e f771                                  brne no_key_press_col_scan
+                                     no_key_press_return:
+00005f 918f                              pop delay_3
+000060 917f                              pop delay_2
+000061 916f                              pop delay_1
+000062 912f                              pop temp
+000063 910f                              pop config
+000064 911f                              pop key
+000065 9508                              ret
+                                 
+                                 
+                                 
+                                 convert:
+                                     ; convert key
+                                     ;   R3(PL4)    1        2       3       A
+                                     ;   R2(PL5)    4        5       6       B
+                                     ;   R1(PL6)    7        8       9       C
+                                     ;   R0(PL7)    *        0       #       D
+                                     ;           C0(PL3) C1(PL2) C2(PL1) C3(PL0)
+                                     key_11:
+000066 3111                          cpi key, 0b0001_0001
+000067 f411                          brne key_12
+000068 e011                          ldi key, 0x01
+000069 c03d                          rjmp convert_end
+                                     key_12:
+00006a 3112                          cpi key, 0b0001_0010
+00006b f411                          brne key_13
+00006c e014                          ldi key, 0x04
+00006d c039                          rjmp convert_end
+                                     key_13:
+00006e 3114                          cpi key, 0b0001_0100
+00006f f411                          brne key_14
+000070 e017                          ldi key, 0x07
+000071 c035                          rjmp convert_end
+                                     key_14:
+000072 3118                          cpi key, 0b0001_1000
+000073 f411                          brne key_21
+000074 e01e                          ldi key, 0x0E       ; symbol *
+000075 c031                          rjmp convert_end
+                                 
+                                     key_21:
+000076 3211                          cpi key, 0b0010_0001
+000077 f411                          brne key_22
+000078 e012                          ldi key, 0x02
+000079 c02d                          rjmp convert_end
+                                     key_22:
+00007a 3212                          cpi key, 0b0010_0010
+00007b f411                          brne key_23
+00007c e015                          ldi key, 0x05
+00007d c029                          rjmp convert_end
+                                     key_23:
+00007e 3214                          cpi key, 0b0010_0100
+00007f f411                          brne key_24
+000080 e018                          ldi key, 0x08
+000081 c025                          rjmp convert_end
+                                     key_24:
+000082 3218                          cpi key, 0b0010_1000
+000083 f411                          brne key_31
+000084 e010                          ldi key, 0x00
+000085 c021                          rjmp convert_end
+                                 
+                                     key_31:
+000086 3411                          cpi key, 0b0100_0001
+000087 f411                          brne key_32
+000088 e013                          ldi key, 0x03
+000089 c01d                          rjmp convert_end
+                                     key_32:
+00008a 3412                          cpi key, 0b0100_0010
+00008b f411                          brne key_33
+00008c e016                          ldi key, 0x06
+00008d c019                          rjmp convert_end
+                                     key_33:
+00008e 3414                          cpi key, 0b0100_0100
+00008f f411                          brne key_34
+000090 e019                          ldi key, 0x09
+000091 c015                          rjmp convert_end
+                                     key_34:
+000092 3418                          cpi key, 0b0100_1000
+000093 f411                          brne key_41
+000094 e01f                          ldi key, 0x0F       ; symbol #
+000095 c011                          rjmp convert_end
+                                 
+                                     key_41:
+000096 3811                          cpi key, 0b1000_0001
+000097 f411                          brne key_42
+000098 e01a                          ldi key, 0x0A
+000099 c00d                          rjmp convert_end
+                                     key_42:
+00009a 3812                          cpi key, 0b1000_0010
+00009b f411                          brne key_43
+00009c e01b                          ldi key, 0x0B
+00009d c009                          rjmp convert_end
+                                     key_43:
+00009e 3814                          cpi key, 0b1000_0100
+00009f f411                          brne key_44
+0000a0 e01c                          ldi key, 0x0C
+0000a1 c005                          rjmp convert_end
+                                     key_44:
+0000a2 3818                          cpi key, 0b1000_1000
+0000a3 f411                          brne key_err
+0000a4 e01d                          ldi key, 0x0D
+0000a5 c001                          rjmp convert_end
+                                     key_err:
+0000a6 ef1f                          ldi key, 0xFF
+                                     convert_end:
+0000a7 9508                              ret
+                                 
+                                 
+                                 overflow_warning:
+0000a8 930f                          push config
+0000a9 932f                          push temp
+0000aa 936f                          push delay_1
+0000ab 937f                          push delay_2
+0000ac 938f                          push delay_3
+0000ad e460                          ldi delay_1, low(overflow_delay)
+0000ae e07d                          ldi delay_2, high(overflow_delay)
+0000af e083                          ldi delay_3, byte3(overflow_delay)
+0000b0 e023                          ldi temp, 3
+                                     overflow_warning_loop:
+0000b1 ef0f                              ser config
+0000b2 b908                              out PORTC, config
+0000b3 df4d                              rcall delay
+0000b4 2700                              clr config
+0000b5 b908                              out PORTC, config
+0000b6 df4a                              rcall delay
+0000b7 952a                              dec temp
+0000b8 3020                              cpi temp, 0
+0000b9 f009                              breq overflow_warning_end
+0000ba cff6                              rjmp overflow_warning_loop
+                                     overflow_warning_end:
+0000bb 918f                              pop delay_3
+0000bc 917f                              pop delay_2
+0000bd 916f                              pop delay_1
+0000be 912f                              pop temp
+0000bf 910f                              pop config
+0000c0 9508                              ret
+                                 
+                                 clear_result:
+0000c1 930f                          push config
+0000c2 936f                          push delay_1
+0000c3 937f                          push delay_2
+0000c4 938f                          push delay_3
+0000c5 e660                          ldi delay_1, low(clear_result_delay)
+0000c6 ee73                          ldi delay_2, high(clear_result_delay)
+0000c7 e186                          ldi delay_3, byte3(clear_result_delay)
+                                     ; trun on LED and trun off again
+0000c8 b304                          in config, PORTG				; load current port G
+0000c9 7f0c                          andi config, 0b1111_1100		; set bit 0 and bit 1 equal to 0
+0000ca 6003                          ori config, 0b0000_0011	        ; set bit 0 to one
+0000cb bb04                          out PORTG, config				; output to PG0 and PG1
+0000cc ef0f                          ser config
+0000cd b908                          out PORTC, config
+0000ce df32                          rcall delay
+0000cf b304                          in config, PORTG				; load current port G
+0000d0 7f0c                          andi config, 0b1111_1100		; set bit 0 and bit 1 equal to 0
+0000d1 6000                          ori config, 0b0000_0000	        ; set bit 0 to one
+0000d2 bb04                          out PORTG, config				; output to PG0 and PG1
+0000d3 2700                          clr config
+0000d4 b908                          out PORTC, config
+                                     ; end
+0000d5 918f                          pop delay_3
+0000d6 917f                          pop delay_2
+0000d7 916f                          pop delay_1
+0000d8 910f                          pop config
+0000d9 9508                          ret
+                                 
+                                 
+                                 get_a:
+0000da 930f                          push config
+0000db 932f                          push temp
+0000dc 931f                          push key
+                                     ; using PG 1 indicate this is inputing a
+0000dd b304                          in config, PORTG				; load current port G
+0000de 7f0c                          andi config, 0b1111_1100		; set bit 0 and bit 1 equal to 0
+0000df 6002                          ori config, 0b0000_0010	        ; set bit 0 to one
+0000e0 bb04                          out PORTG, config				; output to PG0 and PG1
+                                     get_a_init:
+0000e1 e030                              ldi a, 0x00
+0000e2 e000                              ldi config, 0   ; for constant 0
+0000e3 e02a                              ldi temp, 10    ; for constant 10
+                                     get_a_loop:
+0000e4 df3a                              rcall key_scan
+0000e5 df80                              rcall convert
+0000e6 301e                              cpi key, 0x0E       ; if input symbol * then return a
+0000e7 f061                              breq get_a_return
+0000e8 301a                              cpi key, 0x0A       ; if input is not a number then key_scan again
+0000e9 f7d0                              brsh get_a_loop
+0000ea 9f32                              mul a, temp   ; R1:R0 = a * 10
+0000eb 0e01                              add R0, key         ; R1:R0 = R1:R0 + key
+0000ec 1e10                              adc R1, config
+0000ed 1610                              cp R1, config           ; if R1 != 0, then jump to over flow
+0000ee f419                              brne get_a_overflow
+0000ef 2d30                              mov a, R0
+0000f0 b938                              OUT PORTC, a
+0000f1 cff2                              rjmp get_a_loop
+                                     get_a_overflow:
+0000f2 dfb5                              rcall overflow_warning
+0000f3 cfed                              rjmp get_a_init
+                                     get_a_return:
+0000f4 911f                              pop key
+0000f5 912f                              pop temp
+0000f6 910f                              pop config
+0000f7 9508                              ret
+                                 
+                                 get_b:
+0000f8 930f                          push config
+0000f9 932f                          push temp
+0000fa 931f                          push key
+                                     ; using PG 1 indicate this is inputing b
+0000fb b304                          in config, PORTG				; load current port G
+0000fc 7f0c                          andi config, 0b1111_1100		; set bit 0 and bit 1 equal to 0
+0000fd 6001                          ori config, 0b0000_0001	        ; set bit 0 to one
+0000fe bb04                          out PORTG, config				; output to PG0 and PG1
+                                     get_b_init:
+0000ff e040                              ldi b, 0x00
+000100 e000                              ldi config, 0   ; for constant 0
+000101 e02a                              ldi temp, 10    ; for constant 10
+                                     get_b_loop:
+000102 df1c                              rcall key_scan
+000103 df62                              rcall convert
+000104 301f                              cpi key, 0x0F       ; if input symbol # then return b
+000105 f061                              breq get_b_return
+000106 301a                              cpi key, 0x0A       ; if input is not a number then key_scan again
+000107 f7d0                              brsh get_b_loop
+000108 9f42                              mul b, temp   ; R1:R0 = b * 10
+000109 0e01                              add R0, key         ; R1:R0 = R1:R0 + key
+00010a 1e10                              adc R1, config
+00010b 1610                              cp R1, config           ; if R1 != 0, then jump to over flow
+00010c f419                              brne get_b_overflow
+00010d 2d40                              mov b, R0
+00010e b948                              OUT PORTC, b
+00010f cff2                              rjmp get_b_loop
+                                     get_b_overflow:
+000110 df97                              rcall overflow_warning
+000111 cfed                              rjmp get_b_init
+                                     get_b_return:
+000112 911f                              pop key
+000113 912f                              pop temp
+000114 910f                              pop config
+000115 9508                              ret
+                                 
+                                 
+                                 ; program
+                                 reset:
+                                     ;  Initialize Port L
+                                     ;  PortL         7   6   5   4   3   2   1   0
+                                     ;  key           R0  R1  R2  R3  C0  C1  C2  C3
+                                     ;  Mode   (input)0   0   0   0   1   1   1   1(output)
+000116 e00f                          ldi config, 0b00001111
+000117 9300 010a                     STS DDRL, config
+                                 	; Initialize LEDs
+000119 ef0f                      	ser config
+00011a b907                          out DDRC, config
+00011b b303                          in config, DDRG
+00011c 6003                          ori config, 0b00000011
+00011d bb03                          out DDRG, config
                                  
                                  
                                  main:
-                                 	; initialize interupt
-000007 e002                          ldi Configue, (2<<ISC00)  ; set INT0 as falling edge triggered interupt
-000008 9300 0069                     sts EICRA, Configue
-00000a b30d                          in Configue, EIMSK        ; enalbe INT0
-00000b 6001                          ori Configue, (1<<INT0)
-00000c bb0d                          out EIMSK, Configue
-00000d 9478                      	sei                       ; enable global interupt flag
-                                     ; initialize constants
-00000e e070                          ldi zero, 0
-00000f e081                          ldi one, 1
-                                     ; configure the input and output mode of ports
-000010 b303                          in Configue, DDRG
-000011 6003                          ori Configue, 0b00000011
-000012 bb03                          out DDRG, Configue  ; set PG0 and PG1 output mode
-000013 ef0f                          ser Configue
-000014 b907                          out DDRC, Configue  ; set PC0 ~ PC7 output mode
-000015 b10a                          in Configue, DDRD
-000016 7f0c                          andi Configue, 0b11111100
-000017 b90a                          out DDRD, Configue  ; set PD0 and PD1 input mode
-000018 0000                          nop
-000019 b10b                          in Configue, PORTD
-00001a 6003                          ori Configue, 0b00000011
-00001b b90b                          out PORTD, Configue ; active pull-up resister of PD0 and PD1
+00011e dfa2                          rcall clear_result
+00011f dfba                          rcall get_a
+000120 dfd7                          rcall get_b
+000121 9f34                          mul a, b
+000122 e000                          ldi config, 0
+000123 1610                          cp R1, config           ; if R1 = 0, then show result
+000124 f011                          breq show_result
+000125 df82                          rcall overflow_warning
+000126 cff7                          rjmp main
+                                     show_result:            ; if not overflow, show result
+                                         ; using trun off PG0 and PG1 to indicate this is output mode
+000127 b304                              in config, PORTG				; load current port G
+000128 7f0c                              andi config, 0b1111_1100		; set bit 0 and bit 1 equal to 0
+000129 6000                              ori config, 0b0000_0000	        ; set bit 0 to one
+00012a bb04                              out PORTG, config				; output to PG0 and PG1
+00012b 2d50                              mov c, R0
+00012c b958                              out PORTC, c
+00012d def1                              rcall key_scan            ; press any key to continue
+00012e cfef                          rjmp main
                                  
-                                 show_init:
-                                     ; reset loop counter, and address pointer
-00001c e030                          ldi show_loop_counter, 0
-00001d e0f0                          ldi ZH, high(patterns << 1)
-00001e e0e6                          ldi ZL, low(patterns << 1)
-                                 
-                                 show_loop:
-                                     ; load patterns from program memory
-00001f 9115                          lpm Pattern_Low, Z+
-000020 9125                          lpm Pattern_High, Z+
-                                     ; show pattern in LED0 and LED1
-000021 b304                          in Configue, PORTG				; load current port G
-000022 7f0c                          andi Configue, 0b11111100		; set bit 0 and bit 1 equal to 0
-000023 2b01                          or Configue, Pattern_Low	; set bit 2 and bit 3 from pattern
-000024 bb04                          out PORTG, Configue				; output to PG0 and PG1
-                                     ; show pattern in LED2 to LED9
-000025 b928                          out PORTC, Pattern_High
-                                 
-                                 wait_init:
-000026 eb41                          ldi loop_counter_1, low(wait_loop_times)
-000027 ec57                          ldi loop_counter_2, high(wait_loop_times)
-000028 e162                          ldi loop_counter_3, byte3(wait_loop_times)
-000029 2422                          clr i_1
-00002a 2433                          clr i_2
-00002b 2444                          clr i_3
-                                 
-                                 wait_loop:
-                                 ; Delay in this block:  
-                                 ;               instruction     clock cycles
-                                 ;               ----------------------------
-                                 ;               add             1
-                                 ;               adc             1
-                                 ;               adc             1
-                                 ;               cp              1
-                                 ;               cpc             1
-                                 ;               cpc             1
-                                 ;               brsh            1(not jump)
-                                 ;               rjmp            2
-                                 ;               -------------------
-                                 ;               overall         9
-                                 ;
-00002c 0e28                          add i_1, one
-00002d 1e37                          adc i_2, zero
-00002e 1e47                          adc i_3, zero
-00002f 1624                          cp i_1, loop_counter_1
-000030 0635                          cpc i_2, loop_counter_2
-000031 0646                          cpc i_3, loop_counter_3
-000032 f408                          brsh wait_end
-                                     ; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to halt
-                                     ;sbis PIND, 0
-                                     ;rjmp halt
-                                     ;sbis PIND, 1
-                                     ;rjmp halt
-000033 cff8                          rjmp wait_loop
-                                 
-                                 wait_end:
-000034 9533                          inc show_loop_counter
-000035 3034                          cpi show_loop_counter, show_loop_times
-000036 f728                          brsh show_init
-000037 cfe7                          rjmp show_loop
-                                 
-                                 halt:
-000038 ee43
-000039 e65c
-00003a e065
-00003b 2422
-00003c 2433
-00003d 2444
-00003e 0e28
-00003f 1e37
-000040 1e47
-000041 1624
-000042 0635
-000043 0646
-000044 f408
-000045 cff8                          bufferDelay   ; add some buffer before checking next input
-                                 
-                                 check:
-                                 	; when push PD0 or PD1, the bit is clear. Then run next line of code, jump to resume
-000046 9b48                          sbis PIND, 0
-000047 c003                          rjmp resume
-000048 9b49                          sbis PIND, 1
-000049 c001                          rjmp resume
-00004a cffb                          rjmp check
-                                 
-                                 resume:
-00004b ee43
-00004c e65c
-00004d e065
-00004e 2422
-00004f 2433
-000050 2444
-000051 0e28
-000052 1e37
-000053 1e47
-000054 1624
-000055 0635
-000056 0646
-000057 f408
-000058 cff8                          bufferDelay   ; add some buffer before checking next input
-000059 cfda                          rjmp wait_end
-                                 
-                                 EXT_INT0:
-                                     ; show pattern in LED0 and LED1
-00005a b304                          in Configue, PORTG				; load current port G
-00005b 7f0c                          andi Configue, 0b11111100		; set bit 0 and bit 1 to 0
-00005c bb04                          out PORTG, Configue				; output to PG0 and PG1
-                                     ; show pattern in LED2 to LED9
-00005d e000                          ldi Configue, 0b00000000        ; set all bits to 0
-00005e b908                          out PORTC, Configue
-                                     
-                                 end: 
-00005f cfff                          rjmp end
-                                 
+                                 end:
 
 
 RESOURCE USE INFORMATION
@@ -2144,40 +2373,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega2560" register use summary:
-x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   9 r3 :   9 r4 :   9 
+x  :   0 y  :   0 z  :   0 r0 :   5 r1 :   5 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  25 r17:   2 r18:   2 r19:   3 r20:   6 
-r21:   6 r22:   6 r23:   7 r24:   4 r25:   0 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   1 r31:   1 
-Registers used: 15 out of 35 (42.9%)
+r13:   0 r14:   0 r15:   0 r16:  72 r17:  54 r18:  34 r19:  10 r20:  10 
+r21:   7 r22:  15 r23:  15 r24:  15 r25:   0 r26:   0 r27:   0 r28:   0 
+r29:   0 r30:   0 r31:   0 
+Registers used: 11 out of 35 (31.4%)
 
 "ATmega2560" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   6 add   :   3 adiw  :   0 and   :   0 
-andi  :   3 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+.lds  :   0 .sts  :   0 adc   :   4 add   :   4 adiw  :   0 and   :   2 
+andi  :   5 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   6 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   0 brpl  :   0 brsh  :   4 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :  22 brpl  :   0 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   9 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   3 cpc   :   6 
-cpi   :   1 cpse  :   0 dec   :   0 eicall:   0 eijmp :   0 elpm  :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   5 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   4 cpc   :   2 
+cpi   :  27 cpse  :   0 dec   :   1 eicall:   0 eijmp :   0 elpm  :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   6 inc   :   1 jmp   :   0 ld    :   0 ldd   :   0 ldi   :  16 
-lds   :   0 lpm   :   2 lsl   :   0 lsr   :   0 mov   :   0 movw  :   0 
-mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   1 or    :   1 
-ori   :   3 out   :   9 pop   :   0 push  :   0 rcall :   0 ret   :   0 
-reti  :   0 rjmp  :  11 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
-sbi   :   0 sbic  :   0 sbis  :   2 sbiw  :   0 sbr   :   0 sbrc  :   0 
-sbrs  :   0 sec   :   0 seh   :   0 sei   :   1 sen   :   0 ser   :   1 
+in    :   6 inc   :   0 jmp   :   0 ld    :   0 ldd   :   0 ldi   :  46 
+lds   :   2 lpm   :   0 lsl   :   0 lsr   :   4 mov   :   5 movw  :   0 
+mul   :   3 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
+ori   :   6 out   :  14 pop   :  34 push  :  34 rcall :  17 ret   :   8 
+reti  :   0 rjmp  :  27 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
+sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   3 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
-st    :   0 std   :   0 sts   :   1 sub   :   0 subi  :   0 swap  :   0 
+st    :   0 std   :   0 sts   :   3 sub   :   2 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 21 out of 116 (18.1%)
+Instructions used: 28 out of 116 (24.1%)
 
 "ATmega2560" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000c0    182      8    190  262144   0.1%
+[.cseg] 0x000000 0x000260    608      0    608  262144   0.2%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 

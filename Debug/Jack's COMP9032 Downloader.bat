@@ -1,12 +1,16 @@
 :: Name: Jack's COMP9032 Downloader
 :: Author: Jack Jiang
-:: Version: v0.1.0
-:: Data: 1/09/2017
+:: Version: v0.1.1
+:: Data: 17/09/2017
 
+
+:: Configuration
 @echo off
 set port=COM3
 set file_name=A6.hex
 
+
+:: Program
 @title Jack's COMP9032 Downloader : %port% : %file_name%
 echo Press any key to download %file_name% from %port%...
 pause >nul
