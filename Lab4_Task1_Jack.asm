@@ -19,8 +19,6 @@
             .DEF        GLOBAL1=R24
             .DEF        GLOBAL2=R25
 
-
-
 RESET:
             INIT_LCD_IO
             INIT_KEYPAD_IO
@@ -188,8 +186,8 @@ LCD_CHECK_BUSY:
 ;   LCD Registers:
 ;   RS      RW      MODE
 ;   0       0       IR write
-;   0       1       Busy flag       <--
-;   1       0       DR write
+;   0       1       Busy flag       <-- (when checking)
+;   1       0       DR write        <-- (when ending)
 ;   1       1       DR read
             PUSH        TEMP1
             LDI         TEMP1,      0b00000000
@@ -216,6 +214,9 @@ LCD_CHECK_BUSY_LOOP:
             OUT         DDRF,       TEMP1       ; set PORT F as output mode
             POP         TEMP1
             RET
+
+;#################################################################################
+
 
 
 
