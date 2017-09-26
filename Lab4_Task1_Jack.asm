@@ -78,22 +78,22 @@ KEYPAD_CONVERT:
             PUSH        TEMP1
             PUSH        TEMP2
 ; Funciton body
-            LDI         ZH,         HIGH(DICT_KEY << 1)
-            LDI         ZL,         LOW(DICT_KEY << 1)
+            LDI         ZH,            HIGH(DICT_KEY << 1)
+            LDI         ZL,            LOW(DICT_KEY << 1)
             LDI         TEMP1,         0x00                 ; TEMP2:TEPM1 is Index of dictionary
             LDI         TEMP2,         0x00
 KEYPAD_CONVERT_SEARCH_KEY:  
-            LPM         RETURN1,      Z+
-            CP          RETURN1,      ARG1                  ; if KEY != ARG1:
+            LPM         RETURN1,       Z+
+            CP          RETURN1,       ARG1                  ; if KEY != ARG1:
             BREQ        KEYPAD_CONVERT_LOAD_VALUE           ;   go to KEYPAD_CONVERT_LOAD_VALUE
-            ADIW        TEMP2:TEMP1,      1                 ; else: Index += 2
+            ADIW        TEMP2:TEMP1,   1                 ; else: Index += 2
             RJMP        KEYPAD_CONVERT_SEARCH_KEY           ;   go to KEYPAD_CONVERT_SEARCH_KEY
 KEYPAD_CONVERT_LOAD_VALUE:
-            LDI         ZH,         HIGH(DICT_VALUE << 1)
-            LDI         ZL,         LOW(DICT_VALUE << 1)
-            ADD         ZL,         TEMP1                   ; Z = Z + Index
-            ADC         ZH,         TEMP2
-            LPM         RETURN1,      Z
+            LDI         ZH,             HIGH(DICT_VALUE << 1)
+            LDI         ZL,             LOW(DICT_VALUE << 1)
+            ADD         ZL,             TEMP1                   ; Z = Z + Index
+            ADC         ZH,             TEMP2
+            LPM         RETURN1,        Z
 ; Function end
             POP         TEMP2
             POP         TEMP1
