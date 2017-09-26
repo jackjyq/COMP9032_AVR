@@ -15,10 +15,10 @@
             .DEF        ARG4=R19
             .DEF        RETURN1=R20
             .DEF        RETURN2=R21
-            .DEF        TEMP1=R22
-            .DEF        TEMP2=R23
-            .DEF        GLOBAL1=R24
-            .DEF        GLOBAL2=R25
+		    .DEF        GLOBAL1=R22
+            .DEF        GLOBAL2=R23
+            .DEF        TEMP1=R24
+            .DEF        TEMP2=R25
 
 ;   LCD instructions
             .EQU        LCD_CLR=0b00000001
@@ -41,24 +41,64 @@
             .EQU        LCD_DD= 0b10000000
 
 
+			RJMP        RESET
+;=================================== KeyPad Convertor  ===================================
+; code/program memory, constants, starts from 0x0000
+			.CSEG
+DICT_KEY:   
+            .db 0xEE, 0xDE, 0xBE, 0x7E
+            .db 0xED, 0xDD, 0xBD, 0x7D
+            .db 0xEB, 0xDB, 0xBB, 0x7B
+            .db 0xE7, 0xD7, 0xB7, 0x77
 
-RESET:
-            INIT_LCD_IO
-            INIT_KEYPAD_IO
-            INIT_LED_IO                         ; just for test usage
-            RCALL       LCD_SOFT_INIT
+;   convert to hex numbers
+; DICT_VALUE:
+;             .db 0x1, 0x2, 0x3, 0xA
+;             .db 0x4, 0x5, 0x6, 0xB
+;             .db 0x7, 0x8, 0x9, 0xC
+;             .db 0xE, 0x0, 0xF, 0xD
+
+;   convert to LCD characters
+DICT_VALUE:
+            .db 0x31, 0x32, 0x33, 0x41
+            .db 0x34, 0x35, 0x36, 0x42
+            .db 0x37, 0x38, 0x39, 0x43
+            .db 0x2A, 0x30, 0x23, 0x44
 
 
-MAIN:
-            ; TEST_DELAY
-            ; TEST_KEYPAD_SCAN
-            ; TEST_CONVERT_TO_HEX
-            ; TEST_LCD_DRIVER
+.MACRO      TEST_KEYPAD_CONVERT
+            LDI         ARG1,       0x7D
+            RCALL       KEYPAD_CONVERT
+.ENDMACRO
 
 
+KEYPAD_CONVERT:
+; Convert keypad ARG1 to target format RETURN1
+            PUSH        ARG1
+            PUSH        TEMP1
+            PUSH        TEMP2
+; Funciton body
+            LDI         ZH,         HIGH(DICT_KEY << 1)
+            LDI         ZL,         LOW(DICT_KEY << 1)
+            LDI         TEMP1,         0x00                 ; TEMP2:TEPM1 is Index of dictionary
+            LDI         TEMP2,         0x00
+KEYPAD_CONVERT_SEARCH_KEY:  
+            LPM         RETURN1,      Z+
+            CP          RETURN1,      ARG1                  ; if KEY != ARG1:
+            BREQ        KEYPAD_CONVERT_LOAD_VALUE           ;   go to KEYPAD_CONVERT_LOAD_VALUE
+            ADIW        TEMP2:TEMP1,      1                 ; else: Index += 2
+            RJMP        KEYPAD_CONVERT_SEARCH_KEY           ;   go to KEYPAD_CONVERT_SEARCH_KEY
+KEYPAD_CONVERT_LOAD_VALUE:
+            LDI         ZH,         HIGH(DICT_VALUE << 1)
+            LDI         ZL,         LOW(DICT_VALUE << 1)
+            ADD         ZL,         TEMP1                   ; Z = Z + Index
+            ADC         ZH,         TEMP2
+            LPM         RETURN1,      Z
+; Function end
+            POP         TEMP2
+            POP         TEMP1
+            POP         ARG1
 
-END:
-            RJMP        END
 
 ;============================== I/O initialization macros  ==============================
 
@@ -77,6 +117,7 @@ END:
 .MACRO      INIT_LCD_IO
 ;   LCD(2*16 charactor) Initialization:
 ;   PF 0~7  --  Data 0~7
+;   PA4     --  BE
 ;   PA5     --  RW      --  0:WRITE 1:READ
 ;   PA6     --  E       --  ENABLE READ/WRITE
 ;   PA7     --  RS      --  0:INSTRUCTION/BUSY
@@ -84,8 +125,8 @@ END:
             LDI         TEMP1,      0b11111111
             OUT         DDRF,       TEMP1           ; PF7~PF0: output
             IN          TEMP1,      DDRA
-            ORI         TEMP1,      0b11100000
-            OUT         DDRG,       TEMP1           ; PA7~PA5: output
+            ORI         TEMP1,      0b11110000
+            OUT         DDRA,       TEMP1           ; PA7~PA4: output
 .ENDMACRO
 
 
@@ -190,7 +231,7 @@ TEST_LCD_DRIVER_LINE1:
             RCALL       LCD_CHECK_BUSY
             CLR         TEMP1
 TEST_LCD_DRIVER_LINE2:                          
-            LDI         ARG1,       0b10000011  ; display letter C
+            LDI         ARG1,       0b01000011  ; display letter C
             RCALL       LCD_WRITE_DATA
             RCALL       LCD_CHECK_BUSY
             LDI         ARG1,       LOW(3000)   ; delay
@@ -202,7 +243,7 @@ TEST_LCD_DRIVER_LINE2:
             LDI         ARG1,       LCD_CLR     ; else: clear screen
             RCALL       LCD_WRITE_INS
             RCALL       LCD_CHECK_BUSY
-.MACRO
+.ENDMACRO
 
 
 LCD_WRITE_INS:
@@ -367,28 +408,38 @@ LCD_SOFT_INIT:
 ; using LED to test KEYPAD_SCAN
 TEST_KEYPAD_SCAN_LOOP:
             RCALL       KEYPAD_SCAN
+            RCALL       KEYPAD_CHECK_RELEASE
             OUT         PORTC,     RETURN1
             RJMP        TEST_KEYPAD_SCAN_LOOP  
 .ENDMACRO
 
 
-.MACRO      TEST_CONVERT_TO_HEX
+.MACRO      TEST_KEYPAD_WITH_CONVERT
 ; using LED to test CONVERT_TO_HEX_LOOP
-TEST_CONVERT_TO_HEX_LOOP:
+TEST_KEYPAD_WITH_CONVERT_LOOP:
             RCALL       KEYPAD_SCAN
+            RCALL       KEYPAD_CHECK_RELEASE
             MOV         ARG1,       RETURN1
-            RCALL       CONVERT_TO_HEX
+            RCALL       KEYPAD_CONVERT
             OUT         PORTC,     RETURN1
-            RJMP        TEST_CONVERT_TO_HEX_LOOP  
+            RJMP        TEST_KEYPAD_WITH_CONVERT_LOOP  
 .ENDMACRO
 
 
 KEYPAD_SCAN:
 ;   scan keypad, return when released:
+;   Keypad:
+;         C0       C1      C2      C3
+;   R0    1        2       3       A
+;   R1    4        5       6       B
+;   R2    7        8       9       C
+;   R3   *(E)      0      #(F)     D
 ;   RETURN1 format:
-;   R3 R2 R1 R0 C3 C2 C1 C0
-            PUSH TEMP1
-            PUSH TEMP2
+;   C3 C2 C1 C0 R3 R2 R1 R0
+;	Actived button are represented by 0, other bits are 1, for example:
+;	if button 8 (C1,R2) are pushed, then RETURN1 will be: 11011011
+            PUSH        TEMP1
+            PUSH        TEMP2
 KEYPAD_SCAN_PRESS:
             LDI         RETURN1,    0b11110111
             ; Column mask(RETURN1):                         
@@ -396,130 +447,107 @@ KEYPAD_SCAN_PRESS:
 KEYPAD_SCAN_LOOP:
             CPI         RETURN1,    0b00001111          ; if mask is invalid:
             BREQ        KEYPAD_SCAN_PRESS               ;   goto KEYPAD_SCAN_PRESS
-            STS         PORTL,      RETURN1             ; write column
+            STS         PORTL,      RETURN1             ; else: write column
             LDI         TEMP1,      0xFF                ; {
 KEYPAD_SCAN_DELAY:                                      ; delay
             DEC         TEMP1                           ;
             BRNE        KEYPAD_SCAN_DELAY               ; }
-            LDS         TEMP2,    PINL                ; read row
-            ANDI        TEMP2,    0b11110000          ;   mask low 4 bits
-            CPI         TEMP2,    0b11110000          ; if having key pressed:
-            BRNE        KEYPAD_SCAN_RELEASE             ;   goto KEYPAD_SCAN_RELEASE
+            LDS         TEMP2,    PINL                  ; read row
+            ANDI        TEMP2,    0b11110000            ;   mask low 4 bits
+            CPI         TEMP2,    0b11110000            ; if having key pressed:
+            BRNE        KEYPAD_SCAN_END                 ;   goto KEYPAD_SCAN_RELEASE
             LSR         RETURN1                         ; else: right shift mask
-            RJMP        KEYPAD_SCAN_LOOP                ;   goto KEYPAD_SCAN_PRESS_LOOP
-KEYPAD_SCAN_RELEASE:
-            LDS         TEMP2,    PINL                ; read row
-            ANDI        TEMP2,    0b11110000          ;   mask low 4 bits
-            CPI         TEMP2,    0b11110000          ; if having key pressed:
-            BRNE        KEYPAD_SCAN_RELEASE             ;   goto KEYPAD_SCAN_RELEASE
-KEYPAD_SCAN_CONVERT:
-            SUBI        RETURN1,    0b11111111
+            RJMP        KEYPAD_SCAN_LOOP                ;   goto KEYPAD_SCAN_LOOP
+KEYPAD_SCAN_END:
             ANDI        RETURN1,    0b00001111          ; mask high 4 bits
-            SUBI        TEMP2,    0b11111111
-            ANDI        TEMP2,    0b11110000          ; mask high 4 bits
+            ANDI        TEMP2,      0b11110000          ; mask high 4 bits
             ADD         RETURN1,    TEMP2
-            POP         TEMP1
             POP         TEMP2
+            POP         TEMP1
             RET
 
 
-CONVERT_TO_HEX:
-;   ARG1 format:
-;   R3 R2 R1 R0 C3 C2 C1 C0
-;   RETURN1 format:
-;   R3    1        2       3       A
-;   R2    4        5       6       B
-;   R1    7        8       9       C
-;   R0   *(E)      0      #(F)     D
-;         C0       C1      C2      C3
-            PUSH        ARG1
-            CPI         ARG1,        0x11
-            BREQ        CONVERT_TO_HEX_11
-            CPI         ARG1,        0x12
-            BREQ        CONVERT_TO_HEX_12
-            CPI         ARG1,        0x14
-            BREQ        CONVERT_TO_HEX_14
-            CPI         ARG1,        0x18
-            BREQ        CONVERT_TO_HEX_18
-            CPI         ARG1,        0x21
-            BREQ        CONVERT_TO_HEX_21
-            CPI         ARG1,        0x22
-            BREQ        CONVERT_TO_HEX_22
-            CPI         ARG1,        0x24
-            BREQ        CONVERT_TO_HEX_24
-            CPI         ARG1,        0x28
-            BREQ        CONVERT_TO_HEX_28
-            CPI         ARG1,        0x41
-            BREQ        CONVERT_TO_HEX_41
-            CPI         ARG1,        0x42
-            BREQ        CONVERT_TO_HEX_42
-            CPI         ARG1,        0x44
-            BREQ        CONVERT_TO_HEX_44
-            CPI         ARG1,        0x48
-            BREQ        CONVERT_TO_HEX_48
-            CPI         ARG1,        0x81
-            BREQ        CONVERT_TO_HEX_81
-            CPI         ARG1,        0x82
-            BREQ        CONVERT_TO_HEX_82
-            CPI         ARG1,        0x84
-            BREQ        CONVERT_TO_HEX_84
-            CPI         ARG1,        0x88
-            BREQ        CONVERT_TO_HEX_88
-            RJMP        CONVERT_TO_HEX_ERR
-CONVERT_TO_HEX_11:
-            LDI         RETURN1,      0xE
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_12:
-            LDI         RETURN1,      0x0
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_14:
-            LDI         RETURN1,      0xF
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_18:
-            LDI         RETURN1,      0xD
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_21:
-            LDI         RETURN1,      0x7
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_22:
-            LDI         RETURN1,      0x8
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_24:
-            LDI         RETURN1,      0x9
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_28:
-            LDI         RETURN1,      0xC
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_41:
-            LDI         RETURN1,      0x4
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_42:
-            LDI         RETURN1,      0x5
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_44:
-            LDI         RETURN1,      0x6
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_48:
-            LDI         RETURN1,      0xB
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_81:
-            LDI         RETURN1,      0x1
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_82:
-            LDI         RETURN1,      0x2
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_84:
-            LDI         RETURN1,      0x3
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_88:
-            LDI         RETURN1,      0xA
-            RJMP        CONVERT_TO_HEX_END
-CONVERT_TO_HEX_ERR:
-            LDI         RETURN1,      0xFF
-CONVERT_TO_HEX_END:
-            POP         ARG1
+KEYPAD_CHECK_RELEASE:
+; Only return when no key is pressed
+            PUSH        TEMP1
+            PUSH        TEMP2
+            PUSH        RETURN1
+KEYPAD_CHECK_RELEASE_LOOP:
+            LDI         RETURN1,    0b11110111
+            ; Column mask(RETURN1):                         
+            ; 1111 0111 --> 0111 1011 --> 0011 1101 --> 0001 1110  --> 0000 1111 (invalid)
+KEYPAD_CHECK_RELEASE_COL:
+            CPI         RETURN1,    0b00001111          ; if mask is invalid:
+            BREQ        KEYPAD_CHECK_RELEASE_END        ;   goto KEYPAD_CHECK_RELEASE_END
+            STS         PORTL,      RETURN1             ; else: write column
+            LDI         TEMP1,      0xFF                ; {
+KEYPAD_CHECK_RELEASE_DELAY:                             ; delay
+            DEC         TEMP1                           ;
+            BRNE        KEYPAD_CHECK_RELEASE_DELAY      ; }
+KEYPAD_CHECK_RELEASE_ROW:
+            LDS         TEMP2,    PINL                  ; read row
+            ANDI        TEMP2,    0b11110000            ;   mask low 4 bits
+            CPI         TEMP2,    0b11110000            ; if having key pressed:
+            BRNE        KEYPAD_CHECK_RELEASE_LOOP       ;   goto KEYPAD_CHECK_RELEASE_LOOP
+            LSR         RETURN1                         ; else: right shift mask
+            RJMP        KEYPAD_CHECK_RELEASE_COL        ;   goto KEYPAD_CHECK_RELEASE_COL
+KEYPAD_CHECK_RELEASE_END:
+            POP         RETURN1
+            POP         TEMP2
+            POP         TEMP1
             RET
 
+;======================================= Main Program =======================================
 
-;==================================== End of defination  ====================================
+RESET:
+            INIT_LCD_IO
+            INIT_KEYPAD_IO
+            INIT_LED_IO                         ; Initial I/O of LED, just for test usage
+            RCALL       LCD_SOFT_INIT
+
+
+MAIN:
+            ; TEST_DELAY
+            ; TEST_KEYPAD_CONVERT
+            ; TEST_KEYPAD_SCAN
+            ; TEST_KEYPAD_WITH_CONVERT
+            ; TEST_LCD_DRIVER
+
+            CLR         TEMP1                  ; TEMP1 is the counter of displayed characters
+DISPLAY_LINE_1:
+            RCALL       KEYPAD_SCAN
+            RCALL       KEYPAD_CHECK_RELEASE
+            MOV         ARG1,       RETURN1
+            RCALL       KEYPAD_CONVERT
+            MOV         ARG1,       RETURN1
+            RCALL       LCD_WRITE_DATA
+            RCALL       LCD_CHECK_BUSY
+            INC         TEMP1                   ; i ++
+            CPI         TEMP1,      16          ; if i != 16:
+            BRNE        DISPLAY_LINE_1          ;   go to DISPLAY_LINE_1
+            LDI         ARG1,       0b11000000  ; else: change to the second line
+            RCALL       LCD_WRITE_INS
+            RCALL       LCD_CHECK_BUSY
+
+            CLR         TEMP1
+DISPLAY_LINE_2:                   
+            RCALL       KEYPAD_SCAN
+            RCALL       KEYPAD_CHECK_RELEASE
+            MOV         ARG1,       RETURN1
+            RCALL       KEYPAD_CONVERT
+            MOV         ARG1,       RETURN1
+            RCALL       LCD_WRITE_DATA
+            RCALL       LCD_CHECK_BUSY
+            INC         TEMP1                   ; i ++
+            CPI         TEMP1,      17          ; if i != 17:
+            BRNE        DISPLAY_LINE_2          ;   go to DISPLAY_LINE_2
+            LDI         ARG1,       0b11000000  ; else: change to the second line    
+            LDI         ARG1,       LCD_CLR     ; else: clear screen
+            RCALL       LCD_WRITE_INS
+            RCALL       LCD_CHECK_BUSY
+
+            RJMP        MAIN
+
+
+END:
             RJMP        END
