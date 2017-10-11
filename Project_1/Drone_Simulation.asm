@@ -9,7 +9,7 @@
 ;======================================  Configuartion =========================================
 
             .EQU        DRONE_SPEED =  2000    ;   ms
-            .EQU        DRONE_HEIGHT = 10      ;   m
+            .EQU        DRONE_HEIGHT = 9       ;   m
             .EQU        MAP_SIZE = 64
 
 ;======================================  Defination =========================================
@@ -1279,6 +1279,7 @@ STAND_BY:
             RJMP        STAND_BY
 
 
+;====================================================================================
 
 LEFT_INT:
 ;   SEARCH MODE
@@ -1358,7 +1359,7 @@ SEARCH_END:
             CALL       DRONE_INSPECT
             RJMP       END_SIMULATION
 
-
+;====================================================================================
 
 RIGHT_INT:
 ;   MARK ABORTED
@@ -1366,7 +1367,7 @@ RIGHT_INT:
             MOV         ACCIDENT_X, TEMP1
             RJMP        END_SIMULATION
 
-
+;====================================================================================
 
 END_SIMULATION:
 ;   Configue interupted    
@@ -1435,7 +1436,7 @@ END_SIMULATION_SUCCESS:
 END_SIMULATION_FAIL:
             DISPLAY_STRING          STRING_NOT_FOUND
 
-
+;====================================================================================
 
 END:
             JMP        END
