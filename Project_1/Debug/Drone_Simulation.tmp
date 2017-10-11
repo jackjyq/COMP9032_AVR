@@ -1,0 +1,118 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.6</VERSION>
+ <DEVICE>"ATmega2560"</DEVICE>
+ <WORKING_DIR>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc</FILE>
+  <FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\mountain_map.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Debug\Drone_Simulation.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Drone_Simulation.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Drone_Simulation.map</FILE>
+  <FILE>Drone_Simulation.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <RESET><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1244</LINE></RESET>
+  <RIGHT_INT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1363</LINE></RIGHT_INT>
+  <LEFT_INT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1283</LINE></LEFT_INT>
+  <MOUNTAIN_MAP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\mountain_map.inc</FILE><LINE>1</LINE></MOUNTAIN_MAP>
+  <KEYPAD_CONVERT_KEY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>85</LINE></KEYPAD_CONVERT_KEY>
+  <KEYPAD_CONVERT_VALUE><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>95</LINE></KEYPAD_CONVERT_VALUE>
+  <STRING_INPUT_X><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>103</LINE></STRING_INPUT_X>
+  <STRING_INPUT_Y><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>105</LINE></STRING_INPUT_Y>
+  <STRING_INPUT_OV><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>107</LINE></STRING_INPUT_OV>
+  <STRING_TRY_AGAIN><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>109</LINE></STRING_TRY_AGAIN>
+  <STRING_STATUS_G><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>111</LINE></STRING_STATUS_G>
+  <STRING_STATUS_S><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>113</LINE></STRING_STATUS_S>
+  <STRING_STATUS_R><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>115</LINE></STRING_STATUS_R>
+  <STRING_STATUS_I><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>117</LINE></STRING_STATUS_I>
+  <STRING_STATUS_T><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>119</LINE></STRING_STATUS_T>
+  <STRING_STATUS_L><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>121</LINE></STRING_STATUS_L>
+  <STRING_ACCIDENT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>123</LINE></STRING_ACCIDENT>
+  <STRING_NOT_FOUND><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>125</LINE></STRING_NOT_FOUND>
+  <STRING_X><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>127</LINE></STRING_X>
+  <STRING_Y><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>129</LINE></STRING_Y>
+  <STRING_Z><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>131</LINE></STRING_Z>
+  <STRING_COMMA><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>133</LINE></STRING_COMMA>
+  <DELAY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>203</LINE></DELAY>
+  <DELAY_OUT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>227</LINE></DELAY_OUT>
+  <DELAY_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>240</LINE></DELAY_END>
+  <DELAY_IN><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>232</LINE></DELAY_IN>
+  <TOGGLE_LED><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>269</LINE></TOGGLE_LED>
+  <CLR_LED><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>281</LINE></CLR_LED>
+  <FUL_LED><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>292</LINE></FUL_LED>
+  <INC_LED><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>303</LINE></INC_LED>
+  <INC_LED_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>313</LINE></INC_LED_LOOP>
+  <INC_LED_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>321</LINE></INC_LED_END>
+  <DEC_LED><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>329</LINE></DEC_LED>
+  <DEC_LED_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>338</LINE></DEC_LED_LOOP>
+  <DEC_LED_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>345</LINE></DEC_LED_END>
+  <LCD_WRITE_INS><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>402</LINE></LCD_WRITE_INS>
+  <LCD_WRITE_DATA><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>428</LINE></LCD_WRITE_DATA>
+  <LCD_CHECK_BUSY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>455</LINE></LCD_CHECK_BUSY>
+  <LCD_CHECK_BUSY_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>473</LINE></LCD_CHECK_BUSY_LOOP>
+  <LCD_SOFT_INIT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>492</LINE></LCD_SOFT_INIT>
+  <DISPLAY_CLR><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>573</LINE></DISPLAY_CLR>
+  <DISPLAY_NEWLINE><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>583</LINE></DISPLAY_NEWLINE>
+  <KEYPAD_SCAN><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>634</LINE></KEYPAD_SCAN>
+  <KEYPAD_SCAN_PRESS><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>648</LINE></KEYPAD_SCAN_PRESS>
+  <KEYPAD_SCAN_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>652</LINE></KEYPAD_SCAN_LOOP>
+  <KEYPAD_SCAN_DELAY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>657</LINE></KEYPAD_SCAN_DELAY>
+  <KEYPAD_SCAN_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>666</LINE></KEYPAD_SCAN_END>
+  <KEYPAD_CHECK_RELEASE><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>675</LINE></KEYPAD_CHECK_RELEASE>
+  <KEYPAD_CHECK_RELEASE_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>680</LINE></KEYPAD_CHECK_RELEASE_LOOP>
+  <KEYPAD_CHECK_RELEASE_COL><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>684</LINE></KEYPAD_CHECK_RELEASE_COL>
+  <KEYPAD_CHECK_RELEASE_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>699</LINE></KEYPAD_CHECK_RELEASE_END>
+  <KEYPAD_CHECK_RELEASE_DELAY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>689</LINE></KEYPAD_CHECK_RELEASE_DELAY>
+  <KEYPAD_CHECK_RELEASE_ROW><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>692</LINE></KEYPAD_CHECK_RELEASE_ROW>
+  <KEYPAD_CONVERT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>706</LINE></KEYPAD_CONVERT>
+  <KEYPAD_CONVERT_SEARCH_KEY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>716</LINE></KEYPAD_CONVERT_SEARCH_KEY>
+  <KEYPAD_CONVERT_LOAD_VALUE><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>722</LINE></KEYPAD_CONVERT_LOAD_VALUE>
+  <SHOW_NUMBER><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>869</LINE></SHOW_NUMBER>
+  <SHOW_NUMBER_3><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>883</LINE></SHOW_NUMBER_3>
+  <SHOW_NUMBER_2><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>899</LINE></SHOW_NUMBER_2>
+  <SHOW_NUMBER_1><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>915</LINE></SHOW_NUMBER_1>
+  <SHOW_NUMBER_3_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>886</LINE></SHOW_NUMBER_3_LOOP>
+  <SHOW_NUMBER_3_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>892</LINE></SHOW_NUMBER_3_END>
+  <SHOW_NUMBER_2_LOOP><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>902</LINE></SHOW_NUMBER_2_LOOP>
+  <SHOW_NUMBER_2_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>908</LINE></SHOW_NUMBER_2_END>
+  <SHOW_LOCATION_X><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>998</LINE></SHOW_LOCATION_X>
+  <SHOW_LOCATION_Y><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1016</LINE></SHOW_LOCATION_Y>
+  <SHOW_LOCATION_Z><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1034</LINE></SHOW_LOCATION_Z>
+  <SHOW_SEARCH_STATUS><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1132</LINE></SHOW_SEARCH_STATUS>
+  <SHOW_RETURN_STATUS><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1162</LINE></SHOW_RETURN_STATUS>
+  <DRONE_INSPECT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1192</LINE></DRONE_INSPECT>
+  <END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1440</LINE></END>
+  <MAIN><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1258</LINE></MAIN>
+  <STAND_BY><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1278</LINE></STAND_BY>
+  <DRONE_TAKE_OFF><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1297</LINE></DRONE_TAKE_OFF>
+  <DRONE_SEARCH><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1314</LINE></DRONE_SEARCH>
+  <SEARCH_INC><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1317</LINE></SEARCH_INC>
+  <SEARCH_INC_NEXT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1323</LINE></SEARCH_INC_NEXT>
+  <SEARCH_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1350</LINE></SEARCH_END>
+  <SEARCH_INC_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1329</LINE></SEARCH_INC_END>
+  <SEARCH_DEC><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1333</LINE></SEARCH_DEC>
+  <SEARCH_DEC_NEXT><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1339</LINE></SEARCH_DEC_NEXT>
+  <SEARCH_DEC_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1345</LINE></SEARCH_DEC_END>
+  <END_SIMULATION><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1371</LINE></END_SIMULATION>
+  <DRONE_RETURN><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1381</LINE></DRONE_RETURN>
+  <RETURN_Y><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1383</LINE></RETURN_Y>
+  <RETURN_X><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1390</LINE></RETURN_X>
+  <RETURN_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1397</LINE></RETURN_END>
+  <DRONE_LANDING><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1402</LINE></DRONE_LANDING>
+  <DRONE_LANDING_END><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1418</LINE></DRONE_LANDING_END>
+  <END_SIMULATION_FAIL><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1435</LINE></END_SIMULATION_FAIL>
+  <END_SIMULATION_SUCCESS><FILE>C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm</FILE><LINE>1429</LINE></END_SIMULATION_SUCCESS>
+ </LABELS>
+</ASSEMBLER_INFO>
