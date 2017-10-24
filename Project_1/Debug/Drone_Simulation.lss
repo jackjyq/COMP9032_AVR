@@ -1,12 +1,12 @@
 
-AVRASM ver. 2.2.6  C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm Wed Oct 11 00:50:04 2017
+AVRASM ver. 2.2.6  C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm Tue Oct 24 20:03:46 2017
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm(17): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm(80): Including file 'C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\mountain_map.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm(17): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm(80): Including file 'C:\Users\jackj\Github\COMP9032_AVR\Project_1\mountain_map.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm(17): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
-C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm(80): Including file 'C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\mountain_map.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm(17): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\avrasm\inc\m2560def.inc'
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm(80): Including file 'C:\Users\jackj\Github\COMP9032_AVR\Project_1\mountain_map.inc'
                                  
                                  ; AUTHOR: Jack Jiang
                                  
@@ -1856,7 +1856,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
                                  ;======================================  Configuartion =========================================
                                  
                                              .EQU        DRONE_SPEED =  2000    ;   ms
-                                             .EQU        DRONE_HEIGHT = 10      ;   m
+                                             .EQU        DRONE_HEIGHT = 9       ;   m
                                              .EQU        MAP_SIZE = 64
                                  
                                  ;======================================  Defination =========================================
@@ -1972,35 +1972,37 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000072 1f1e
 000073 2120
 000074 2322
-000075 2524
-000076 2726
-000077 2928
-000078 2b2a
-000079 2d2c
-00007a 3732
-00007b 413c
-00007c 4b46
-00007d 5550
-00007e 5756
-00007f 5958
-000080 5b5a
-000081 5d5c
-000082 5f5e
-000083 6160
-000084 6362
-000085 6564
-000086 6766
-000087 6968
-000088 6b6a
-000089 6d6c
-00008a 6f6e
-00008b 7170
-00008c 676c
-00008d 5d62
-00008e 5358
-00008f 494e
-000090 3f44
-000091 353a                      .db  30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50, 55, 60, 65, 70, 75, 80, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 108, 103, 98, 93, 88, 83, 78000092 201f
+000075 2624
+000076 2827
+000077 2a29
+000078 2c2b
+000079 322d
+00007a 3c37
+00007b 4641
+00007c 504b
+00007d 5655
+00007e 5857
+00007f 5a59
+000080 5c5b
+000081 5e5d
+000082 605f
+000083 6261
+000084 6463
+000085 6665
+000086 6867
+000087 6a69
+000088 6c6b
+000089 6e6d
+00008a 706f
+00008b 6c71
+00008c 6267
+00008d 585d
+00008e 4e53
+00008f 4449
+000090 3a3f
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\mountain_map.inc(2): warning: .cseg .db misalignment - padding zero byte
+C:\Users\jackj\Github\COMP9032_AVR\Project_1\Drone_Simulation.asm(80): 'C:\Users\jackj\Github\COMP9032_AVR\Project_1\mountain_map.inc' included form here
+000091 0035                      .db  30, 31, 32, 33, 34, 35, 36, 38, 39, 40, 41, 42, 43, 44, 45, 50, 55, 60, 65, 70, 75, 80, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 108, 103, 98, 93, 88, 83, 78, 73000092 201f
 000093 2221
 000094 2423
 000095 2625
@@ -2031,7 +2033,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 0000ae 5459
 0000af 4a4f
 0000b0 4045
-0000b1 363b                      , 73, 68, 63, 58, 53
+0000b1 363b                      , 68, 63, 58, 53
 0000b2 2120
 0000b3 2322
 0000b4 2524
@@ -5169,7 +5171,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000ab6 940e 09b4                             CALL        DISPLAY_NEWLINE
 000ab8 2f06                                  MOV         ARG1,       GLOBAL1
 000ab9 2f17                                  MOV         ARG2,       GLOBAL2
-000aba e02a                                  LDI         ARG3,       DRONE_HEIGHT
+000aba e029                                  LDI         ARG3,       DRONE_HEIGHT
 000abb 940e 0a35                             CALL        SHOW_LOCATION_X
 000abd 940e 0a4c                             CALL        SHOW_LOCATION_Y
 000abf 940e 0a6d                             CALL        SHOW_LOCATION_Z
@@ -5206,7 +5208,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000adf 940e 09b4                             CALL        DISPLAY_NEWLINE
 000ae1 2f06                                  MOV         ARG1,       GLOBAL1
 000ae2 2f17                                  MOV         ARG2,       GLOBAL2
-000ae3 e02a                                  LDI         ARG3,       DRONE_HEIGHT
+000ae3 e029                                  LDI         ARG3,       DRONE_HEIGHT
 000ae4 940e 0a35                             CALL        SHOW_LOCATION_X
 000ae6 940e 0a4c                             CALL        SHOW_LOCATION_Y
 000ae8 940e 0a6d                             CALL        SHOW_LOCATION_Z
@@ -5230,7 +5232,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000af7 932f                                  PUSH        ARG3
 000af8 938f                                  PUSH        TEMP1
                                  ;   function start
-000af9 e02a                                  LDI         ARG3,       DRONE_HEIGHT
+000af9 e029                                  LDI         ARG3,       DRONE_HEIGHT
 000afa 940e 09ac                             CALL        DISPLAY_CLR
 000afc 2f80                                  MOV         TEMP1,      ARG1
 000afd e1f1
@@ -5529,6 +5531,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000c71 cfff                                  RJMP        STAND_BY
                                  
                                  
+                                 ;====================================================================================
                                  
                                  LEFT_INT:
                                  ;   SEARCH MODE
@@ -5568,7 +5571,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000c9b 940e 0a4c                             CALL        SHOW_LOCATION_Y
 000c9d 940e 0a6d                             CALL        SHOW_LOCATION_Z             ; show z = z(0, 0) + ARG3
 000c9f 9523                                  INC         ARG3
-000ca0 302a                                  CPI         ARG3,       DRONE_HEIGHT
+000ca0 3029                                  CPI         ARG3,       DRONE_HEIGHT
 000ca1 f428                                  BRSH        DRONE_SEARCH
 000ca2 eb08                                  LDI         ARG1,       LOW(3000)
 000ca3 e01b                                  LDI         ARG2,       HIGH(3000)
@@ -5629,7 +5632,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000cdb 940e 0af5                             CALL       DRONE_INSPECT
 000cdd c003                                  RJMP       END_SIMULATION
                                  
-                                 
+                                 ;====================================================================================
                                  
                                  RIGHT_INT:
                                  ;   MARK ABORTED
@@ -5637,7 +5640,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000cdf 2e28                                  MOV         ACCIDENT_X, TEMP1
 000ce0 c000                                  RJMP        END_SIMULATION
                                  
-                                 
+                                 ;====================================================================================
                                  
                                  END_SIMULATION:
                                  ;   Configue interupted    
@@ -5676,7 +5679,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000d02 940e 0acc                             CALL        SHOW_RETURN_STATUS
                                  
                                  ;   landing
-000d04 e02a                                  LDI         ARG3,       DRONE_HEIGHT        ; initialize the height of drone
+000d04 e029                                  LDI         ARG3,       DRONE_HEIGHT        ; initialize the height of drone
                                  DRONE_LANDING:
 000d05 940e 09ac                             CALL        DISPLAY_CLR
 000d07 e1f1
@@ -5741,7 +5744,7 @@ C:\Users\jackj\Dropbox\Courses\S1 COMP9032\Drone_Simulation\Drone_Simulation.asm
 000d53 940e 095a
 000d55 940c 0d4e                             DISPLAY_STRING          STRING_NOT_FOUND
                                  
-                                 
+                                 ;====================================================================================
                                  
                                  END:
 
@@ -5798,4 +5801,4 @@ Segment   Begin    End      Code   Data   Used    Size   Use%
 [.dseg] 0x000200 0x000200      0      0      0    8192   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    4096   0.0%
 
-Assembly complete, 0 errors, 0 warnings
+Assembly complete, 0 errors, 1 warnings
