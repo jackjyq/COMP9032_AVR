@@ -133,19 +133,8 @@ ret
 
 .dseg ; data memory
 lable: .byte expr ; a number of byte for variable
-ld
-lds
-st
-sts
-.cseg ; code memory
-in code memory
-lable: .db    ; one byte
-lable: .dw    ; two byte(little endian)
-lpm   ; address in code memory is word address, however, lpm is byte address
 
-ldi ZH, high(table_1 <<1)
-ldi ZL, low(table_1 <<2)
-lmp r16, Z
+
 ```
 - assembler expression
 ```AVR
@@ -175,21 +164,62 @@ high()
 
 ### memory
 
-- Program memory(flas, 16bits)
+- Program memory(flash, 16bits)
   - Interrupt Vectors
+  - ```
+    each vector has 2 word address (4 bytes)
+    from 0x0000~0x0072 word address
+    ```
+
   - program
+  - ```
+    .cseg         ; code memory
+    lable: .db    ; one byte
+    lable: .dw    ; two byte(little endian)
+
+    ; read program memory
+    lpm           ; address in code memory is word address, however, lpm is byte address
+    ldi ZH, high(table_1 <<1)
+    ldi ZL, low(table_1 <<2)
+    lmp r16, Z
+    ```
 
 - Data memory(SRAM, 8bits)
 
 Name              | Address     | Comments
 ------------------|-------------|---------------
-32 Registers      | 0-1F        |  
-64 I/O            | 20~5F       | IN/OUT/SBI/CBI/SBIC/SBIS
-416 Ex I/O Reg    | 60~1FF      | ST/STS/STD/LD/LDS/LDD
-8192 Internal SRAM| 0200-21FF   | stack
-External SRAM     | 2200-FFFF   | optional
+32 Registers      | 0-1F        |
+64 I/O            | 20~5F       | PA ~ PG, SP, SREG ...
+416 Ex I/O Reg    | 60~1FF      |
+8192 Internal SRAM| 0200-21FF   | stack from 0x21FF
 
-- EEPROM
+  - separate I/O (one byte address)
+    ```
+    example:
+    in YL, SPL
+    in YH, SPH
+    sbiw Y, 8
+    out SPH, YH
+    out SPL, YL
+
+    other:
+    SBI A, b   ; set bit in I/O register
+    CBI A, b   ; clear bit in I/O register
+
+    SBIS  A, b  ; skip if bit is set
+    SBIC  A, b  ; skip if bit is cleared
+    ```
+
+  - memory map(two byte address)
+    ```
+    read:
+    ld R, X/Y/Z
+    ldd R, Y/Z    ; indirect addressing with displacement
+
+    write:
+    st R, X/Y/Z
+    std R, Y/Z    ; indirect addressing with displacement
+    ```
 
 ## Parallel I/O
 
@@ -241,7 +271,7 @@ External SRAM     | 2200-FFFF   | optional
     - pop stack
     - return
 
-- REset in AVR
+- RESET in AVR
   - power-on reset
   - external reset
   - watchdog reset
@@ -358,3 +388,42 @@ External SRAM     | 2200-FFFF   | optional
 - parity error
 - data overrun error
   - if any data is yet read but is overwritten by incoming data frame
+
+## instruction
+
+### Branch instructions
+
+- compare
+    ```
+    cp r2, r0   ; low
+    cpc r3, r1  ; high
+    brne  ...
+    ```
+- branch
+  ```
+  Unsigned:
+  BRLO  ; brach is lower
+  BRSH  ; brach if same or higher
+
+  Signed:
+  BRLT  ; brach is less than
+  BRGE  ; brach is greater or equal
+  ```
+
+### Arithmetic and logic instructions
+
+```
+add
+adc
+adiw r+1:r, k
+
+sub
+sbc
+sbiw r+1:r, k
+subi    ; subtract immediate number
+subc
+
+mul     ; multiply signed
+muls    ; multiply unsigned
+mulsu   ; multiply signed and unsigned
+```

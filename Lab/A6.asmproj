@@ -15,7 +15,7 @@
     <Name>A6</Name>
     <RootNamespace>OpenMe</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <EntryFile>$(MSBuildProjectDirectory)\Lab4_Task2_Jack.asm</EntryFile>
+    <EntryFile>$(MSBuildProjectDirectory)\wang.asm</EntryFile>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
@@ -93,7 +93,16 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Lab4_Task2_Jack.asm">
+    <Compile Include="clear.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="endianness.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="find_length.asm">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wang.asm">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
